@@ -73,12 +73,15 @@ public class App extends Application {
      * Find the the project version in pom.xml and returns it.
      *
      * @return the project version
-     * @throws IOException            if an error occurs during reading pom.xml
-     * @throws XmlPullParserException if pom.xml cannot be parsed
      */
-    private String getProjectVersionFromPom() throws IOException, XmlPullParserException {
-        MavenXpp3Reader reader = new MavenXpp3Reader();
-        Model model = reader.read(new FileReader("pom.xml"));
-        return model.getVersion();
+    private String getProjectVersionFromPom() {
+        try {
+            MavenXpp3Reader reader = new MavenXpp3Reader();
+            Model model = reader.read(new FileReader("pom.xml"));
+            return model.getVersion();
+        } catch (IOException | XmlPullParserException e) {
+            logger.error("Something is wrong", e);
+        }
+        return null;
     }
 }
