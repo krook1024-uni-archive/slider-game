@@ -20,8 +20,18 @@ import org.slf4j.LoggerFactory;
  * The class that controls the application GUI.
  */
 public class App extends Application {
-    private int appWidth = 640;
-    private int appHeight = 480;
+
+    /**
+     * Specifies the width of the app window.
+     */
+    private static final int appWidth = 640;
+
+    /**
+     * Specifies the height of the app window.
+     */
+    private static final int appHeight = 480;
+
+    private static org.slf4j.Logger logger = LoggerFactory.getLogger(App.class);
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -60,7 +70,7 @@ public class App extends Application {
      * Find the the project version in pom.xml and returns it.
      *
      * @return the project version
-     * @throws IOException if an error occurs during reading pom.xml
+     * @throws IOException            if an error occurs during reading pom.xml
      * @throws XmlPullParserException if pom.xml cannot be parsed
      */
     private String getProjectVersionFromPom() throws IOException, XmlPullParserException {
