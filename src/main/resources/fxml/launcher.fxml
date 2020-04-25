@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/10.0.2-internal"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.krook1024.game.controller.LauncherController">
+    <VBox alignment="CENTER" prefWidth="640" prefHeight="480" spacing="25.0">
+        <Button mnemonicParsing="false" text="Start Game"/>
+        <Button mnemonicParsing="false"
+                text="Scoreboard"
+                fx:id="scoreboardButton"
+                onAction="#onScoreboardButtonClicked"/>
+        <Button mnemonicParsing="false"
+                text="Quit Game"
+                fx:id="quitGameButton"
+                onAction="#onQuitGameButtonClicked"/>
+
+    </VBox>
+</AnchorPane>
