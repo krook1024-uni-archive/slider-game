@@ -1,0 +1,24 @@
+<project name="slider-game">
+    <skin>
+        <groupId>org.apache.maven.skins</groupId>
+        <artifactId>maven-fluido-skin</artifactId>
+        <version>1.9</version>
+    </skin>
+    <body>
+        <menu name="Overview">
+            <item name="Introduction" href="index.html"/>
+            <item name="JavaDocs" href="apidocs/index.html"/>
+            <item name="Source Xref" href="xref/index.html"/>
+            <item name="License" href="http://www.apache.org/licenses/"/>
+            <item name="Download" href="/download.html"/>
+        </menu>
+        <menu ref="modules"/>
+        <menu ref="reports"/>
+    </body>
+    <custom>
+        <fluidoSkin>
+            <topBarEnabled>true</topBarEnabled>
+            <sideBarEnabled>false</sideBarEnabled>
+        </fluidoSkin>
+    </custom>
+</project>
