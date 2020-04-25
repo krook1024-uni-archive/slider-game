@@ -34,23 +34,26 @@ public class App extends Application {
     private static org.slf4j.Logger logger = LoggerFactory.getLogger(App.class);
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage)  {
         logger.info("Starting slider-game...");
         long startTime = System.nanoTime();
 
         setAppTitleWithVersion(stage);
-
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/launcher.fxml"));
-        logger.debug("Loaded fxml resource: " + root);
-
-        stage.setScene(new Scene(root));
         stage.setWidth(appWidth);
         stage.setHeight(appHeight);
         stage.setResizable(false);
-        stage.show();
+
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/launcher.fxml"));
+            logger.debug("Loaded fxml resource: " + root);
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            logger.error("Something is wrong", e);
+        }
 
         long elapsedTime = System.nanoTime() - startTime;
-        logger.info("Started application in " + elapsedTime / 1000000 + " ms");
+        logger.info("Started application in {} ms", elapsedTime / 1000000);
     }
 
     /**
