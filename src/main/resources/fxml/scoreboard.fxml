@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.krook1024.game.controller.ScoreboardController">
+    <VBox alignment="CENTER" prefHeight="480" prefWidth="640" spacing="20.0">
+        <TableView>
+            <columns>
+                <TableColumn prefWidth="245.0" text="Name"/>
+                <TableColumn prefWidth="245.0" text="Number of moves" />
+            </columns>
+        </TableView>
+        <Button fx:id="goBackButton" onAction="#onGoBackButtonClicked" text="Go Back" />
+    </VBox>
+</AnchorPane>
