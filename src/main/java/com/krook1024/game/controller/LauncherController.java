@@ -27,15 +27,18 @@ public class LauncherController {
      * Called when the user clicks the scoreboard button on the launcher.
      *
      * @param event the click event
-     * @throws IOException if the scoreboard layout cannot be found
      */
     @FXML
-    private void onScoreboardButtonClicked(ActionEvent event) throws IOException {
+    private void onScoreboardButtonClicked(ActionEvent event) {
         logger.info("Scoreboard button clicked, changing scene...");
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/scoreboard.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.show();
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/scoreboard.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            logger.error("Something is wrong", e);
+        }
     }
 
     /**
