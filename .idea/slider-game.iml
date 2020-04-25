@@ -10,8 +10,10 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-api:2.13.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-core:2.13.1" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.28" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.tinylog:tinylog-api:2.1.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.tinylog:tinylog-impl:2.1.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.tinylog:slf4j-tinylog:2.1.1" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:14" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:linux:14" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:14" level="project" />
@@ -21,5 +23,7 @@
     <orderEntry type="library" name="Maven: org.apache.maven:maven-model:3.3.9" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.plexus:plexus-utils:3.0.22" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.4" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:14.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:linux:14.0.1" level="project" />
   </component>
 </module>
