@@ -18,5 +18,8 @@
     <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:linux:14" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-base:14" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-base:linux:14" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.maven:maven-model:3.3.9" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.plexus:plexus-utils:3.0.22" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.4" level="project" />
   </component>
 </module>
