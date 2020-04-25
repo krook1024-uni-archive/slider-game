@@ -1,6 +1,8 @@
 package com.krook1024.game.main;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
@@ -27,6 +29,13 @@ public class App extends Application {
         Scene scene = new Scene(new StackPane(l), appWidth, appHeight);
         stage.setScene(scene);
         setAppTitleWithVersion(stage);
+
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/launcher.fxml"));
+        logger.debug("Loaded fxml resource: " + root);
+
+        stage.setScene(new Scene(root));
+        stage.setWidth(appWidth);
+        stage.setHeight(appHeight);
         stage.setResizable(false);
         stage.show();
     }
