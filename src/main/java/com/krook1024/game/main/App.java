@@ -13,6 +13,8 @@ import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 
 import java.io.FileReader;
 import java.io.IOException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The class that controls the application GUI.
@@ -22,12 +24,10 @@ public class App extends Application {
     private int appHeight = 480;
 
     @Override
-    public void start(Stage stage) {
-        String javaVersion = System.getProperty("java.version");
-        String javafxVersion = System.getProperty("javafx.version");
-        Label l = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
-        Scene scene = new Scene(new StackPane(l), appWidth, appHeight);
-        stage.setScene(scene);
+    public void start(Stage stage) throws IOException {
+        logger.info("Starting slider-game...");
+        long startTime = System.nanoTime();
+
         setAppTitleWithVersion(stage);
 
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/launcher.fxml"));
@@ -38,6 +38,9 @@ public class App extends Application {
         stage.setHeight(appHeight);
         stage.setResizable(false);
         stage.show();
+
+        long elapsedTime = System.nanoTime() - startTime;
+        logger.info("Started application in " + elapsedTime / 1000000 + " ms");
     }
 
     /**
