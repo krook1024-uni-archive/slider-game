@@ -1,5 +1,6 @@
 package com.krook1024.game.controller;
 
+import com.krook1024.game.main.App;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -20,15 +22,21 @@ public class ScoreboardController {
      */
     @FXML private Button goBackButton;
 
+    private static org.slf4j.Logger logger = LoggerFactory.getLogger(App.class);
+
     /**
      * Runs when the user clicks the Go Back button on the scoreboard view.
      *
      * @param event the click event
-     * @throws IOException if it cannot load launcher's view
      */
-    public void onGoBackButtonClicked(ActionEvent event) throws IOException {
+    public void onGoBackButtonClicked(ActionEvent event)  {
         Stage stage = (Stage) goBackButton.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/launcher.fxml"));
-        stage.setScene(new Scene(root));
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/launcher.fxml"));
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            logger.error("Something is wrong", e);
+        }
     }
 }
