@@ -53,6 +53,9 @@ public class App extends Application {
             FXMLLoader nameFormSceneLoader = getFxmlLoader("/fxml/nameform.fxml");
             Parent nameFormSceneRoot = nameFormSceneLoader.load();
 
+            FXMLLoader gameSceneLoader = getFxmlLoader("/fxml/game.fxml");
+            Parent gameSceneRoot = gameSceneLoader.load();
+
             // Pass the preloaded fxml files to the scoreboard controller so that it can load it much quicker
             LauncherController launcherController = launcherSceneLoader.getController();
             launcherController.setScoreboardSceneRoot(scoreboardSceneRoot);
@@ -62,8 +65,10 @@ public class App extends Application {
             ScoreboardController scoreboardController = scoreboardSceneLoader.getController();
             scoreboardController.setLauncherSceneRoot(launcherSceneRoot);
 
+            // Pass the preloaded fxml files to the game controller
             NameFormController nameFormController = nameFormSceneLoader.getController();
             nameFormController.setLauncherSceneRoot(launcherSceneRoot);
+            nameFormController.setGameSceneRoot(gameSceneRoot);
 
             stage.setScene(new Scene(launcherSceneRoot));
             stage.show();

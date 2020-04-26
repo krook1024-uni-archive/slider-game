@@ -10,13 +10,14 @@ import org.slf4j.LoggerFactory;
  * Acts as a base class for every other controller.
  *
  * @author krook1024
- * @since 1.0
  * @version 1.0
+ * @since 1.0
  */
 public class BaseController {
     protected Parent launcherSceneRoot;
     protected Parent scoreboardSceneRoot;
     protected Parent nameFormSceneRoot;
+    protected Parent gameSceneRoot;
 
     protected org.slf4j.Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -33,7 +34,7 @@ public class BaseController {
     /**
      * Sets the scene root on the specified stage.
      *
-     * @param stage the stage to change scene root on
+     * @param stage     the stage to change scene root on
      * @param sceneRoot the new scene root
      */
     protected void setSceneRoot(Stage stage, Parent sceneRoot) {
@@ -65,5 +66,13 @@ public class BaseController {
 
     public void setNameFormSceneRoot(Parent nameFormSceneRoot) {
         this.nameFormSceneRoot = nameFormSceneRoot;
+    }
+
+    public Parent getGameSceneRoot() {
+        return gameSceneRoot;
+    }
+
+    public void setGameSceneRoot(Parent gameSceneRoot) {
+        this.gameSceneRoot = gameSceneRoot;
     }
 }
