@@ -17,14 +17,10 @@ import java.io.IOException;
 /**
  * Acts as a controller class for the scoreboard view.
  */
-public class ScoreboardController {
+public class ScoreboardController extends BaseController {
     /* TODO: implement scoreboardTable functionality
     @FXML private TableView scoreboardTable;
      */
-
-    private Parent launcherSceneRoot;
-
-    private static org.slf4j.Logger logger = LoggerFactory.getLogger(App.class);
 
     /**
      * Runs when the user clicks the Go Back button on the scoreboard view.
@@ -32,20 +28,6 @@ public class ScoreboardController {
      * @param event the click event
      */
     public void onGoBackButtonClicked(ActionEvent event) {
-        if (launcherSceneRoot == null) {
-            throw new AssertionError("launcherScene is not loaded");
-        }
-
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.getScene().setRoot(launcherSceneRoot);
-        stage.show();
-    }
-
-    public Parent getLauncherSceneRoot() {
-        return launcherSceneRoot;
-    }
-
-    public void setLauncherSceneRoot(Parent launcherSceneRoot) {
-        this.launcherSceneRoot = launcherSceneRoot;
+        setSceneRoot(getStageOfEvent(event), launcherSceneRoot);
     }
 }
