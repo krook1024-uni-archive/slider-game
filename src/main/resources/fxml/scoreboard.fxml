@@ -10,6 +10,12 @@
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.krook1024.game.controller.ScoreboardController">
     <VBox alignment="CENTER" prefHeight="480" prefWidth="640" spacing="20.0">
+        <TableView fx:id="tableView" prefHeight="350.0">
+            <columns>
+                <TableColumn prefWidth="200.0" text="Name" fx:id="userName" />
+                <TableColumn prefWidth="200.0" text="Moves to win" fx:id="movesToWin" />
+            </columns>
+        </TableView>
         <Button mnemonicParsing="false" onAction="#onGoBackButtonClicked" text="Go Back"/>
         <padding>
             <Insets left="20.0" right="20.0"/>

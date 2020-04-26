@@ -3,6 +3,7 @@ package com.krook1024.game.main;
 import com.krook1024.game.controller.LauncherController;
 import com.krook1024.game.controller.ScoreboardController;
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -49,9 +50,13 @@ public class App extends Application {
             FXMLLoader scoreboardSceneLoader = getFxmlLoader("/fxml/scoreboard.fxml");
             Parent scoreboardSceneRoot = scoreboardSceneLoader.load();
 
+            FXMLLoader nameFormSceneLoader = getFxmlLoader("/fxml/nameform.fxml");
+            Parent nameFormSceneRoot = nameFormSceneLoader.load();
+
             // Pass the preloaded launcher fxml to the scoreboard controller so that it can load it much quicker
             LauncherController launcherController = launcherSceneLoader.getController();
             launcherController.setScoreboardSceneRoot(scoreboardSceneRoot);
+            launcherController.setNameFormSceneRoot(nameFormSceneRoot);
 
             // Pass the preloaded scoreboard fxml to the launcher controller
             ScoreboardController scoreboardController = scoreboardSceneLoader.getController();

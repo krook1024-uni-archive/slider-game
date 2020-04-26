@@ -7,7 +7,9 @@
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.krook1024.game.controller.LauncherController">
     <VBox alignment="CENTER" prefWidth="640" prefHeight="480" spacing="25.0">
-        <Button mnemonicParsing="false" text="Start Game"/>
+        <Button mnemonicParsing="false"
+                text="Start Game"
+                onAction="#onStartGameButtonClicked"/>
         <Button mnemonicParsing="false"
                 text="Scoreboard"
                 onAction="#onScoreboardButtonClicked"/>
