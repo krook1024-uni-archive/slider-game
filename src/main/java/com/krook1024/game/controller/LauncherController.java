@@ -29,9 +29,6 @@ public class LauncherController extends BaseController {
      */
     @FXML
     private void onScoreboardButtonClicked(ActionEvent event) {
-        if (scoreboardSceneRoot == null) {
-            throw new AssertionError("scoreboardSceneLoader is not loaded");
-        }
         setSceneRoot(getStageOfEvent(event), scoreboardSceneRoot);
     }
 
