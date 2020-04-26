@@ -10,11 +10,9 @@
         <Button mnemonicParsing="false" text="Start Game"/>
         <Button mnemonicParsing="false"
                 text="Scoreboard"
-                fx:id="scoreboardButton"
                 onAction="#onScoreboardButtonClicked"/>
         <Button mnemonicParsing="false"
                 text="Quit Game"
-                fx:id="quitGameButton"
                 onAction="#onQuitGameButtonClicked"/>
 
     </VBox>
