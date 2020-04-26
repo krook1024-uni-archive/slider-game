@@ -18,8 +18,7 @@ import java.io.IOException;
  */
 public class LauncherController {
 
-    @FXML private Button quitGameButton;
-    @FXML private Button scoreboardButton;
+    private Scene scoreboardScene;
 
     private static org.slf4j.Logger logger = LoggerFactory.getLogger(App.class);
 
@@ -30,15 +29,13 @@ public class LauncherController {
      */
     @FXML
     private void onScoreboardButtonClicked(ActionEvent event) {
-        logger.info("Scoreboard button clicked, changing scene...");
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/scoreboard.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            logger.error("Something is wrong", e);
+        if (scoreboardScene == null) {
+            throw new AssertionError("scoreboardScene is not loaded");
         }
+        logger.info("Scoreboard button clicked, changing scene...");
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scoreboardScene);
+        stage.show();
     }
 
     /**
@@ -51,5 +48,13 @@ public class LauncherController {
         logger.info("Quit button clicked, exiting now...");
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
+    }
+
+    public Scene getScoreboardScene() {
+        return scoreboardScene;
+    }
+
+    public void setScoreboardScene(Scene scoreboardScene) {
+        this.scoreboardScene = scoreboardScene;
     }
 }

@@ -4,6 +4,7 @@ import com.krook1024.game.main.App;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -20,7 +21,8 @@ public class ScoreboardController {
     /* TODO: implement scoreboardTable functionality
     @FXML private TableView scoreboardTable;
      */
-    @FXML private Button goBackButton;
+
+    private Scene launcherScene;
 
     private static org.slf4j.Logger logger = LoggerFactory.getLogger(App.class);
 
@@ -29,14 +31,21 @@ public class ScoreboardController {
      *
      * @param event the click event
      */
-    public void onGoBackButtonClicked(ActionEvent event)  {
-        Stage stage = (Stage) goBackButton.getScene().getWindow();
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/launcher.fxml"));
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            logger.error("Something is wrong", e);
+    public void onGoBackButtonClicked(ActionEvent event) {
+        if (launcherScene == null) {
+            throw new AssertionError("launcherScene is not loaded");
         }
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(launcherScene);
+        stage.show();
+    }
+
+    public Scene getLauncherScene() {
+        return launcherScene;
+    }
+
+    public void setLauncherScene(Scene launcherScene) {
+        this.launcherScene = launcherScene;
     }
 }
