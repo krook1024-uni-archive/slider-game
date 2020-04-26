@@ -4,11 +4,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="480.0" maxWidth="640.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.krook1024.game.controller.ScoreboardController">
+<AnchorPane maxHeight="480.0"
+            maxWidth="640.0"
+            xmlns="http://javafx.com/javafx/10.0.2-internal"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.krook1024.game.controller.ScoreboardController">
     <VBox alignment="CENTER" prefHeight="480" prefWidth="640" spacing="20.0">
-        <Button onAction="#onGoBackButtonClicked" text="Go Back" />
-      <padding>
-         <Insets left="20.0" right="20.0" />
-      </padding>
+        <Button onAction="#onGoBackButtonClicked" text="Go Back"/>
+        <padding>
+            <Insets left="20.0" right="20.0"/>
+        </padding>
     </VBox>
 </AnchorPane>
