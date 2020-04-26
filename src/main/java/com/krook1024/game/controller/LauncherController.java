@@ -36,6 +36,7 @@ public class LauncherController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scoreboardScene);
         stage.show();
+        logger.debug("Changed scene to {} on stage {}", scoreboardScene, stage);
     }
 
     /**
