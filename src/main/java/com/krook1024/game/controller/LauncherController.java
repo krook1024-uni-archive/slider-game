@@ -3,22 +3,17 @@ package com.krook1024.game.controller;
 import com.krook1024.game.main.App;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
 
 /**
  * Acts as a controller for the launcher view.
  */
 public class LauncherController {
 
-    private Scene scoreboardScene;
+    private Parent scoreboardSceneRoot;
 
     private static org.slf4j.Logger logger = LoggerFactory.getLogger(App.class);
 
@@ -29,14 +24,14 @@ public class LauncherController {
      */
     @FXML
     private void onScoreboardButtonClicked(ActionEvent event) {
-        if (scoreboardScene == null) {
-            throw new AssertionError("scoreboardScene is not loaded");
+        if (scoreboardSceneRoot == null) {
+            throw new AssertionError("scoreboardSceneLoader is not loaded");
         }
         logger.info("Scoreboard button clicked, changing scene...");
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scoreboardScene);
+        stage.getScene().setRoot(scoreboardSceneRoot);
         stage.show();
-        logger.debug("Changed scene to {} on stage {}", scoreboardScene, stage);
+        logger.debug("Changed scene root to {} on stage {}", scoreboardSceneRoot, stage);
     }
 
     /**
@@ -51,11 +46,11 @@ public class LauncherController {
         stage.close();
     }
 
-    public Scene getScoreboardScene() {
-        return scoreboardScene;
+    public Parent getScoreboardSceneRoot() {
+        return scoreboardSceneRoot;
     }
 
-    public void setScoreboardScene(Scene scoreboardScene) {
-        this.scoreboardScene = scoreboardScene;
+    public void setScoreboardSceneRoot(Parent scoreboardSceneRoot) {
+        this.scoreboardSceneRoot = scoreboardSceneRoot;
     }
 }

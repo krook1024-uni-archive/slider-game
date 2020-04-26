@@ -6,17 +6,14 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileReader;
 import java.io.IOException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The class that controls the application GUI.
@@ -35,38 +32,33 @@ public class App extends Application {
 
     private static org.slf4j.Logger logger = LoggerFactory.getLogger(App.class);
 
-    Stage window;
-    Scene launcherScene, scoreboardScene;
-
     @Override
     public void start(Stage stage)  {
         logger.info("Starting slider-game...");
         long startTime = System.nanoTime();
 
-        window = stage;
-
-        setAppTitleWithVersion(window);
-        window.setWidth(appWidth);
-        window.setHeight(appHeight);
-        window.setResizable(false);
+        setAppTitleWithVersion(stage);
+        stage.setWidth(appWidth);
+        stage.setHeight(appHeight);
+        stage.setResizable(false);
 
         try {
             FXMLLoader launcherSceneLoader = getFxmlLoader("/fxml/launcher.fxml");
-            Scene launcherScene = new Scene(launcherSceneLoader.load());
+            Parent launcherSceneRoot = launcherSceneLoader.load();
 
             FXMLLoader scoreboardSceneLoader = getFxmlLoader("/fxml/scoreboard.fxml");
-            Scene scoreboardScene = new Scene(scoreboardSceneLoader.load());
+            Parent scoreboardSceneRoot = scoreboardSceneLoader.load();
 
             // Pass the preloaded launcher fxml to the scoreboard controller so that it can load it much quicker
             LauncherController launcherController = launcherSceneLoader.getController();
-            launcherController.setScoreboardScene(scoreboardScene);
+            launcherController.setScoreboardSceneRoot(scoreboardSceneRoot);
 
             // Pass the preloaded scoreboard fxml to the launcher controller
             ScoreboardController scoreboardController = scoreboardSceneLoader.getController();
-            scoreboardController.setLauncherScene(launcherScene);
+            scoreboardController.setLauncherSceneRoot(launcherSceneRoot);
 
-            window.setScene(launcherScene);
-            window.show();
+            stage.setScene(new Scene(launcherSceneRoot));
+            stage.show();
         } catch (IOException e) {
             logger.error("Something is wrong", e);
         }

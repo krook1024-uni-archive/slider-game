@@ -22,7 +22,7 @@ public class ScoreboardController {
     @FXML private TableView scoreboardTable;
      */
 
-    private Scene launcherScene;
+    private Parent launcherSceneRoot;
 
     private static org.slf4j.Logger logger = LoggerFactory.getLogger(App.class);
 
@@ -32,20 +32,20 @@ public class ScoreboardController {
      * @param event the click event
      */
     public void onGoBackButtonClicked(ActionEvent event) {
-        if (launcherScene == null) {
+        if (launcherSceneRoot == null) {
             throw new AssertionError("launcherScene is not loaded");
         }
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(launcherScene);
+        stage.getScene().setRoot(launcherSceneRoot);
         stage.show();
     }
 
-    public Scene getLauncherScene() {
-        return launcherScene;
+    public Parent getLauncherSceneRoot() {
+        return launcherSceneRoot;
     }
 
-    public void setLauncherScene(Scene launcherScene) {
-        this.launcherScene = launcherScene;
+    public void setLauncherSceneRoot(Parent launcherSceneRoot) {
+        this.launcherSceneRoot = launcherSceneRoot;
     }
 }

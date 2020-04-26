@@ -10,7 +10,7 @@
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.krook1024.game.controller.ScoreboardController">
     <VBox alignment="CENTER" prefHeight="480" prefWidth="640" spacing="20.0">
-        <Button onAction="#onGoBackButtonClicked" text="Go Back"/>
+        <Button mnemonicParsing="false" onAction="#onGoBackButtonClicked" text="Go Back"/>
         <padding>
             <Insets left="20.0" right="20.0"/>
         </padding>
