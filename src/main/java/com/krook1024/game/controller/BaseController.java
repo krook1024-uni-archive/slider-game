@@ -1,6 +1,5 @@
 package com.krook1024.game.controller;
 
-import com.krook1024.game.main.App;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.Parent;

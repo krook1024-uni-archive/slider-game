@@ -1,12 +1,7 @@
 package com.krook1024.game.controller;
 
-import com.krook1024.game.main.App;
-import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.stage.Stage;
-import org.slf4j.LoggerFactory;
+import javafx.fxml.FXML;
 
 /**
  * Acts as a controller for the launcher view.

@@ -4,7 +4,6 @@ import com.krook1024.game.controller.LauncherController;
 import com.krook1024.game.controller.NameFormController;
 import com.krook1024.game.controller.ScoreboardController;
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
