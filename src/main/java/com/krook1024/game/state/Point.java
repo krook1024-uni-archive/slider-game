@@ -2,10 +2,12 @@ package com.krook1024.game.state;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 
 @Data
 @AllArgsConstructor
+@EqualsAndHashCode
 public class Point {
     @NonNull
     private int x, y;

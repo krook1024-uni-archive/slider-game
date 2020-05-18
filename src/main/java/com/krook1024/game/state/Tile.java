@@ -1,9 +1,13 @@
 package com.krook1024.game.state;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 
+import static com.krook1024.game.state.Direction.*;
+
 @Data
+@EqualsAndHashCode
 public class Tile {
     @NonNull
     private Point topLeft, topRight, botLeft, botRight;
@@ -52,8 +56,8 @@ public class Tile {
              */
             case TYPE1:
                 return (topLeft.getY() == topRight.getY()) &&
-                       (topLeft.getX() == botRight.getX()) &&
-                       (botLeft.distanceTo(botRight) == 0);
+                        (topLeft.getX() == botRight.getX()) &&
+                        (botLeft.distanceTo(botRight) == 0);
 
             /*
                     X X
@@ -61,8 +65,8 @@ public class Tile {
              */
             case TYPE2:
                 return (topLeft.getY() == topRight.getY()) &&
-                       (topRight.getX() == botRight.getX()) &&
-                       (botLeft.distanceTo(botRight) == 0);
+                        (topRight.getX() == botRight.getX()) &&
+                        (botLeft.distanceTo(botRight) == 0);
 
             /*
                     X
@@ -70,8 +74,8 @@ public class Tile {
              */
             case TYPE3:
                 return (botLeft.getY() == botRight.getY()) &&
-                       (botLeft.getX() == topLeft.getX()) &&
-                       (topLeft.distanceTo(topRight) == 0);
+                        (botLeft.getX() == topLeft.getX()) &&
+                        (topLeft.distanceTo(topRight) == 0);
 
             /*
                       X
@@ -79,8 +83,8 @@ public class Tile {
              */
             case TYPE4:
                 return (botLeft.getY() == botRight.getY()) &&
-                       (botRight.getX() == topRight.getX()) &&
-                       (topRight.distanceTo(topLeft) == 0) ;
+                        (botRight.getX() == topRight.getX()) &&
+                        (topRight.distanceTo(topLeft) == 0);
 
             /*
                     X X
@@ -90,5 +94,62 @@ public class Tile {
                 return true;
         }
         return false;
+    }
+
+    /**
+     * Returns whether the tile is at the edge of the grid.
+     *
+     * @return whether the tile is at the edge of the grid (-1 if it's at the left edge, 1 if it's at the right edge, 0 if it's not at the edge)
+     */
+    private int isAtXEdge() {
+        if (Math.min(topLeft.getX(), botLeft.getX()) == 0)
+            return -1;
+
+        if (Math.max(topRight.getX(), botRight.getX()) == 5)
+            return 1;
+
+        return 0;
+    }
+
+    /**
+     * Returns whether the tile is at the edge of the grid.
+     *
+     * @return whether the tile is at the edge of the grid (-1 if it's at the left edge, 1 if it's at the right edge, 0 if it's not at the edge)
+     */
+    private int isAtYEdge() {
+        if (Math.min(topLeft.getY(), topRight.getY()) == 0)
+            return -1;
+
+        if (Math.max(botLeft.getY(), botRight.getY()) == 3)
+            return 1;
+
+        return 0;
+    }
+
+    /**
+     * Steps a tile across the X axis.
+     *
+     * @param direction the direction
+     */
+    public void stepAcrossX(Direction direction) {
+        if (isAtXEdge() == 1 && direction == RIGHT || isAtXEdge() == -1 && direction == LEFT) {
+            return;
+        }
+
+        topLeft.setX(topLeft.getX() + direction.getValue());
+        topRight.setX(topRight.getX() + direction.getValue());
+        botLeft.setX(botLeft.getX() + direction.getValue());
+        botRight.setX(botRight.getX() + direction.getValue());
+    }
+
+    public void stepAcrossY(Direction direction) {
+        if (isAtYEdge() == 1 && direction == DOWN || isAtYEdge() == -1 && direction == UP) {
+            return;
+        }
+
+        topLeft.setY(topLeft.getY() + direction.getValue());
+        topRight.setY(topRight.getY() + direction.getValue());
+        botLeft.setY(botLeft.getY() + direction.getValue());
+        botRight.setY(botRight.getY() + direction.getValue());
     }
 }

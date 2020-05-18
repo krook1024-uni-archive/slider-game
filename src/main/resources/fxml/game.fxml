@@ -17,33 +17,51 @@
                      <Insets left="20.0" />
                   </HBox.margin>
                </Label>
-               <Label fx:id="stepsLabel1" layoutX="562.0" layoutY="46.0" text="0">
+               <Label fx:id="stepsLabel" layoutX="562.0" layoutY="46.0" text="0">
                   <HBox.margin>
                      <Insets left="5.0" />
                   </HBox.margin>
                </Label>
                 </children>
             </HBox>
-            <Pane maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
-            <GridPane fx:id="gameGrid" alignment="CENTER" prefHeight="320.0" prefWidth="480.0" style="-fx-grid-lines-visible: true;" VBox.vgrow="NEVER">
-                <columnConstraints>
-                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="60.0" />
-                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="60.0" />
-                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="60.0" />
-                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="60.0" />
-                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="60.0" />
-                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="60.0" />
-                </columnConstraints>
-                <rowConstraints>
-                    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
-                    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
-                    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
-                    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
-                </rowConstraints>
-            </GridPane>
+         <GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+           <columnConstraints>
+               <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+           </columnConstraints>
+           <rowConstraints>
+               <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+             <RowConstraints vgrow="SOMETIMES" />
+             <RowConstraints vgrow="SOMETIMES" />
+               <RowConstraints vgrow="SOMETIMES" />
+           </rowConstraints>
+            <children>
+                  <GridPane fx:id="gameGrid" alignment="CENTER" prefHeight="320.0" prefWidth="480.0" style="-fx-grid-lines-visible: true;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                      <columnConstraints>
+                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="60.0" />
+                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="60.0" />
+                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="60.0" />
+                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="60.0" />
+                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="60.0" />
+                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="60.0" />
+                      </columnConstraints>
+                      <rowConstraints>
+                          <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                          <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                          <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                          <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                      </rowConstraints>
+                  </GridPane>
+               <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="🡄" GridPane.rowIndex="1" />
+               <Button alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="151.0" mnemonicParsing="false" text="🡆" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+               <Button alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="167.0" mnemonicParsing="false" text="🡅" GridPane.columnIndex="1" />
+               <Button alignment="CENTER" contentDisplay="CENTER" layoutX="83.0" layoutY="5.0" mnemonicParsing="false" text="🡇" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            </children>
+         </GridPane>
         </children>
         <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            <Insets bottom="20.0" left="20.0" right="20.0" />
         </padding>
     </VBox>
 </AnchorPane>
