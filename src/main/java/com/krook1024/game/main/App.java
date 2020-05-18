@@ -1,5 +1,6 @@
 package com.krook1024.game.main;
 
+import com.krook1024.game.controller.GameController;
 import com.krook1024.game.controller.LauncherController;
 import com.krook1024.game.controller.NameFormController;
 import com.krook1024.game.controller.ScoreboardController;
@@ -34,7 +35,7 @@ public class App extends Application {
     private static org.slf4j.Logger logger = LoggerFactory.getLogger(App.class);
 
     @Override
-    public void start(Stage stage)  {
+    public void start(Stage stage) {
         logger.info("Starting slider-game...");
         long startTime = System.nanoTime();
 
@@ -44,8 +45,8 @@ public class App extends Application {
         stage.setResizable(false);
 
         try {
-            Parent launcherSceneRoot = preloadFxmlResources();
-
+            FXMLLoader launcherSceneLoader = getFxmlLoader("/fxml/launcher.fxml");
+            Parent launcherSceneRoot = launcherSceneLoader.load();
             stage.setScene(new Scene(launcherSceneRoot));
             stage.show();
         } catch (IOException e) {
@@ -57,50 +58,14 @@ public class App extends Application {
     }
 
     /**
-     * Preloads FXML resources for the corresponding controllers.
-     * This improves performance when switching scenes and fixes a bug that
-     * occurs in tiling window managers that keeps the scenes from being loaded.
-     * @return the launcherSceneRoot instance
-     * @throws IOException when an fxml resource cannot be loaded
-     */
-    private Parent preloadFxmlResources() throws IOException {
-        FXMLLoader launcherSceneLoader = getFxmlLoader("/fxml/launcher.fxml");
-        Parent launcherSceneRoot = launcherSceneLoader.load();
-
-        FXMLLoader scoreboardSceneLoader = getFxmlLoader("/fxml/scoreboard.fxml");
-        Parent scoreboardSceneRoot = scoreboardSceneLoader.load();
-
-        FXMLLoader nameFormSceneLoader = getFxmlLoader("/fxml/nameform.fxml");
-        Parent nameFormSceneRoot = nameFormSceneLoader.load();
-
-        FXMLLoader gameSceneLoader = getFxmlLoader("/fxml/game.fxml");
-        Parent gameSceneRoot = gameSceneLoader.load();
-
-        // Pass the preloaded fxml files to the scoreboard controller so that it can load it much quicker
-        LauncherController launcherController = launcherSceneLoader.getController();
-        launcherController.setScoreboardSceneRoot(scoreboardSceneRoot);
-        launcherController.setNameFormSceneRoot(nameFormSceneRoot);
-
-        // Pass the preloaded fxml files to the launcher controller
-        ScoreboardController scoreboardController = scoreboardSceneLoader.getController();
-        scoreboardController.setLauncherSceneRoot(launcherSceneRoot);
-
-        // Pass the preloaded fxml files to the game controller
-        NameFormController nameFormController = nameFormSceneLoader.getController();
-        nameFormController.setLauncherSceneRoot(launcherSceneRoot);
-        nameFormController.setGameSceneRoot(gameSceneRoot);
-        return launcherSceneRoot;
-    }
-
-    /**
      * Gets an {@code FXMLLoader} instance to the specified resource.
      *
      * @param resourceName the name of the resource that has to be loaded
      * @return the loader instance
      */
-    private FXMLLoader getFxmlLoader(String resourceName) {
+    public static FXMLLoader getFxmlLoader(String resourceName) {
         logger.info("Loading resource: {}", resourceName);
-        return new FXMLLoader(getClass().getResource(resourceName));
+        return new FXMLLoader(App.class.getResource(resourceName));
     }
 
     /**

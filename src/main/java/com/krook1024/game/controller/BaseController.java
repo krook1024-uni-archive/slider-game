@@ -1,10 +1,15 @@
 package com.krook1024.game.controller;
 
+import com.krook1024.game.main.App;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
 
 /**
  * Acts as a base class for every other controller.
@@ -14,11 +19,6 @@ import org.slf4j.LoggerFactory;
  * @since 1.0
  */
 public class BaseController {
-    protected Parent launcherSceneRoot;
-    protected Parent scoreboardSceneRoot;
-    protected Parent nameFormSceneRoot;
-    protected Parent gameSceneRoot;
-
     protected org.slf4j.Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
@@ -32,47 +32,21 @@ public class BaseController {
     }
 
     /**
-     * Sets the scene root on the specified stage.
+     * Sets the scene on the specified stage.
      *
-     * @param stage     the stage to change scene root on
-     * @param sceneRoot the new scene root
+     * @param stage        the stage to change scene root on
+     * @param resourceName the path to the new scene
      */
-    protected void setSceneRoot(Stage stage, Parent sceneRoot) {
-        logger.info("Changing scene root");
-        stage.getScene().setRoot(sceneRoot);
-        stage.show();
-        logger.debug("Changed scene root to {} on stage {}", sceneRoot, stage);
-    }
-
-    public Parent getLauncherSceneRoot() {
-        return launcherSceneRoot;
-    }
-
-    public void setLauncherSceneRoot(Parent launcherSceneRoot) {
-        this.launcherSceneRoot = launcherSceneRoot;
-    }
-
-    public Parent getScoreboardSceneRoot() {
-        return scoreboardSceneRoot;
-    }
-
-    public void setScoreboardSceneRoot(Parent scoreboardSceneRoot) {
-        this.scoreboardSceneRoot = scoreboardSceneRoot;
-    }
-
-    public Parent getNameFormSceneRoot() {
-        return nameFormSceneRoot;
-    }
-
-    public void setNameFormSceneRoot(Parent nameFormSceneRoot) {
-        this.nameFormSceneRoot = nameFormSceneRoot;
-    }
-
-    public Parent getGameSceneRoot() {
-        return gameSceneRoot;
-    }
-
-    public void setGameSceneRoot(Parent gameSceneRoot) {
-        this.gameSceneRoot = gameSceneRoot;
+    protected void changeSceneTo(Stage stage, String resourceName) {
+        logger.info("Changing scene to: {}", resourceName);
+        FXMLLoader fxmlLoader = App.getFxmlLoader(resourceName);
+        try {
+            Parent root = fxmlLoader.load();
+            stage.setScene(new Scene(root));
+            stage.show();
+            logger.debug("Changed scene to {} on stage {}", root, stage);
+        } catch (IOException e) {
+            logger.warn("Something is wrong", e);
+        }
     }
 }

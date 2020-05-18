@@ -1,5 +1,6 @@
 package com.krook1024.game.controller;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
@@ -14,7 +15,7 @@ public class LauncherController extends BaseController {
      */
     @FXML
     private void onStartGameButtonClicked(ActionEvent event) {
-        setSceneRoot(getStageOfEvent(event), nameFormSceneRoot);
+        changeSceneTo(getStageOfEvent(event), "/fxml/nameform.fxml");
     }
 
     /**
@@ -24,7 +25,7 @@ public class LauncherController extends BaseController {
      */
     @FXML
     private void onScoreboardButtonClicked(ActionEvent event) {
-        setSceneRoot(getStageOfEvent(event), scoreboardSceneRoot);
+        changeSceneTo(getStageOfEvent(event), "/fxml/scoreboard.fxml");
     }
 
     /**
@@ -35,6 +36,6 @@ public class LauncherController extends BaseController {
     @FXML
     private void onQuitGameButtonClicked(ActionEvent event) {
         logger.info("Quit button clicked, exiting now...");
-        getStageOfEvent(event).close();
+        Platform.exit();
     }
 }

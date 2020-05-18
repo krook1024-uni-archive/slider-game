@@ -5,7 +5,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -30,7 +32,7 @@ public class NameFormController extends BaseController {
      */
     @FXML
     public void onGoBackButtonClicked(ActionEvent event) {
-        setSceneRoot(getStageOfEvent(event), launcherSceneRoot);
+        changeSceneTo(getStageOfEvent(event), "/fxml/launcher.fxml");
     }
 
     /**
@@ -41,18 +43,17 @@ public class NameFormController extends BaseController {
      */
     @FXML
     public void onPlayButtonClicked(ActionEvent event) throws IOException {
-        System.out.println("event = " + event);
-        System.out.println("onPlayButtonClicked");
         String nameText = name.getText();
         if (nameText != null) {
             logger.info("Starting game with the username {}", nameText);
 
-            FXMLLoader fxmlLoader = new FXMLLoader(NameFormController.class.getResource("/fxml/game.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/game.fxml"));
             Parent root = fxmlLoader.load();
             GameController controller = fxmlLoader.getController();
             controller.setName(name.getText());
-
-            setSceneRoot(getStageOfEvent(event), gameSceneRoot);
+            Stage stage = getStageOfEvent(event);
+            stage.setScene(new Scene(root));
+            stage.show();
         }
     }
 }

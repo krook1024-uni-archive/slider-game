@@ -16,6 +16,6 @@ public class ScoreboardController extends BaseController {
      * @param event the click event
      */
     public void onGoBackButtonClicked(ActionEvent event) {
-        setSceneRoot(getStageOfEvent(event), launcherSceneRoot);
+        changeSceneTo(getStageOfEvent(event), "/fxml/launcher.fxml");
     }
 }
