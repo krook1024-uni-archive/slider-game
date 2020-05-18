@@ -2,6 +2,7 @@ package com.krook1024.game.controller;
 
 import com.krook1024.game.state.SliderState;
 import com.krook1024.game.state.Tile;
+import com.krook1024.game.state.TileType;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -103,8 +104,9 @@ public class GameController extends BaseController {
     public void draw() {
         for (Tile t : sliderState.getTiles()) {
             ImageView imageView = new ImageView();
+
             GridPane.setRowIndex(imageView, Math.min(t.getTopLeft().getY(), t.getBotLeft().getY()));
-            GridPane.setColumnIndex(imageView, Math.min(t.getTopRight().getX(), t.getBotRight().getX()));
+            GridPane.setColumnIndex(imageView, Math.min(t.getTopLeft().getX(), t.getBotLeft().getX()));
 
             GridPane.setRowSpan(imageView, 2);
             GridPane.setColumnSpan(imageView, 2);
