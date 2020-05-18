@@ -16,7 +16,7 @@
                 <children>
                     <Label fx:id="usernameLabel" text="Hello, User"/>
                     <Pane maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS"/>
-                    <Label fx:id="elapsedTime" text="00:00:00"/>
+                    <Label fx:id="elapsedTimeLabel" text="00:00:00"/>
                 </children>
             </HBox>
             <Pane maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS"/>
