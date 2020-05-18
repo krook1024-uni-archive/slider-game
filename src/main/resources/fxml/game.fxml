@@ -53,10 +53,10 @@
                           <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
                       </rowConstraints>
                   </GridPane>
-               <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="🡄" GridPane.rowIndex="1" />
-               <Button alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="151.0" mnemonicParsing="false" text="🡆" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-               <Button alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="167.0" mnemonicParsing="false" text="🡅" GridPane.columnIndex="1" />
-               <Button alignment="CENTER" contentDisplay="CENTER" layoutX="83.0" layoutY="5.0" mnemonicParsing="false" text="🡇" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+               <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#stepLeft" text="🡄" GridPane.rowIndex="1" />
+               <Button alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="151.0" mnemonicParsing="false" onAction="#stepRight" text="🡆" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+               <Button alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="167.0" mnemonicParsing="false" onAction="#stepUp" text="🡅" GridPane.columnIndex="1" />
+               <Button alignment="CENTER" contentDisplay="CENTER" layoutX="83.0" layoutY="5.0" mnemonicParsing="false" onAction="#stepDown" text="🡇" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             </children>
          </GridPane>
         </children>

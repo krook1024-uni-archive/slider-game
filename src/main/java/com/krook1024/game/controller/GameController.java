@@ -1,8 +1,8 @@
 package com.krook1024.game.controller;
 
+import com.krook1024.game.state.Direction;
 import com.krook1024.game.state.SliderState;
 import com.krook1024.game.state.Tile;
-import com.krook1024.game.state.TileType;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -11,17 +11,14 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
-import java.time.LocalTime;
 import java.util.List;
 
 /**
@@ -34,6 +31,7 @@ public class GameController extends BaseController {
     private SliderState sliderState;
     private Timeline clock;
     private List<Image> images;
+    private int activeTileIndex;
 
     @FXML
     Label usernameLabel;
@@ -57,7 +55,7 @@ public class GameController extends BaseController {
                 new Image(getClass().getResource("/rectangle/4.png").toExternalForm()),
                 new Image(getClass().getResource("/rectangle/5.png").toExternalForm())
         );
-        //stepsLabel.textProperty().bind(steps.asString());
+        stepsLabel.textProperty().bind(steps.asString());
         resetGame();
     }
 
@@ -102,6 +100,7 @@ public class GameController extends BaseController {
     }
 
     public void draw() {
+        gameGrid.getChildren().clear();
         for (Tile t : sliderState.getTiles()) {
             ImageView imageView = new ImageView();
 
@@ -112,7 +111,53 @@ public class GameController extends BaseController {
             GridPane.setColumnSpan(imageView, 2);
 
             imageView.setImage(images.get(t.getType().getValue() - 1));
+
+            imageView.setOnMouseClicked(this::handleGameGridClick);
+
             gameGrid.getChildren().add(imageView);
         }
+    }
+
+    private void handleGameGridClick(Event e) {
+        Node source = (Node) e.getSource();
+        Integer colIndex = GridPane.getColumnIndex(source);
+        Integer rowIndex = GridPane.getRowIndex(source);
+        Integer colSpan = GridPane.getColumnSpan(source);
+        Integer rowSpan = GridPane.getRowSpan(source);
+        logger.info("Clicked on Tile [{}, {}]", colIndex, rowIndex);
+        gameGrid.getChildren()
+                .filtered((Node elem) -> elem != source)
+                .forEach((Node elem) -> elem.setStyle("-fx-opacity: 1;"));
+        source.setStyle("-fx-opacity: 0.85");
+        activeTileIndex = sliderState.findTileIndexAtPoint(colIndex, rowIndex);
+        logger.info("The corresponding index for the clicked tile is {}", activeTileIndex);
+    }
+
+    @FXML
+    public void stepLeft(ActionEvent event) {
+        sliderState.stepTileWithIndexAcrossX(activeTileIndex, Direction.LEFT);
+        steps.add(1);
+        draw();
+    }
+
+    @FXML
+    public void stepRight(ActionEvent event) {
+        sliderState.stepTileWithIndexAcrossX(activeTileIndex, Direction.RIGHT);
+        steps.add(1);
+        draw();
+    }
+
+    @FXML
+    public void stepUp(ActionEvent event) {
+        sliderState.stepTileWithIndexAcrossY(activeTileIndex, Direction.UP);
+        steps.add(1);
+        draw();
+    }
+
+    @FXML
+    public void stepDown(ActionEvent event) {
+        sliderState.stepTileWithIndexAcrossY(activeTileIndex, Direction.DOWN);
+        steps.add(1);
+        draw();
     }
 }
