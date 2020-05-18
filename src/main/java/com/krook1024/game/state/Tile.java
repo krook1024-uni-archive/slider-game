@@ -15,8 +15,24 @@ public class Tile {
     @NonNull
     private TileType type = TileType.TYPE1;
 
+    public Tile(TileType tileType, Point topLeft) {
+        Point topRight = new Point(topLeft.getX() + 1, topLeft.getY()),
+                botLeft = new Point(topLeft.getX(), topLeft.getY() + 1),
+                botRight = new Point(topLeft.getX() + 1, topLeft.getY() + 1);
+
+        if (Tile.isValidTile(topLeft, topRight, botLeft, botRight)) {
+            this.type = tileType;
+            this.topLeft = topLeft;
+            this.topRight = topRight;
+            this.botLeft = botLeft;
+            this.botRight = botRight;
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
+
     public Tile(TileType tileType, Point topLeft, Point topRight, Point botLeft, Point botRight) {
-        if (Tile.isValidTile(tileType, topLeft, topRight, botLeft, botRight)) {
+        if (Tile.isValidTile(topLeft, topRight, botLeft, botRight)) {
             this.type = tileType;
             this.topLeft = topLeft;
             this.topRight = topRight;
@@ -33,7 +49,7 @@ public class Tile {
      * @return true or false whether the tile is valid.
      */
     public boolean isValid() {
-        return Tile.isValidTile(this.type, this.topLeft, this.topRight, this.botLeft, this.botRight);
+        return Tile.isValidTile(this.topLeft, this.topRight, this.botLeft, this.botRight);
     }
 
     /**
@@ -45,55 +61,9 @@ public class Tile {
      * @param botRight the bottom right co-ordinate of the tile
      * @return whether the tile is valid or not.
      */
-    public static boolean isValidTile(TileType type, Point topLeft, Point topRight, Point botLeft, Point botRight) {
-
-        switch (type) {
-            case EMPTY:
-                return false;
-            /*
-                    X X
-                    X
-             */
-            case TYPE1:
-                return (topLeft.getY() == topRight.getY()) &&
-                        (topLeft.getX() == botRight.getX()) &&
-                        (botLeft.distanceTo(botRight) == 0);
-
-            /*
-                    X X
-                      X
-             */
-            case TYPE2:
-                return (topLeft.getY() == topRight.getY()) &&
-                        (topRight.getX() == botRight.getX()) &&
-                        (botLeft.distanceTo(botRight) == 0);
-
-            /*
-                    X
-                    X X
-             */
-            case TYPE3:
-                return (botLeft.getY() == botRight.getY()) &&
-                        (botLeft.getX() == topLeft.getX()) &&
-                        (topLeft.distanceTo(topRight) == 0);
-
-            /*
-                      X
-                    X X
-             */
-            case TYPE4:
-                return (botLeft.getY() == botRight.getY()) &&
-                        (botRight.getX() == topRight.getX()) &&
-                        (topRight.distanceTo(topLeft) == 0);
-
-            /*
-                    X X
-                    X X
-             */
-            case TYPE5:
-                return true;
-        }
-        return false;
+    public static boolean isValidTile(Point topLeft, Point topRight, Point botLeft, Point botRight) {
+        return topLeft.distanceTo(botRight) < 2 &&
+                topRight.distanceTo(botLeft) < 2;
     }
 
     /**
