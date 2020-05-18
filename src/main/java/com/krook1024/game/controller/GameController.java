@@ -134,7 +134,7 @@ public class GameController extends BaseController {
                 .forEach((Node elem) -> elem.setStyle("-fx-opacity: 1;"));
         source.setStyle("-fx-opacity: 0.85");
 
-        activeTileIndex = sliderState.findTileIndexAtPoint(colIndex, rowIndex);
+        activeTileIndex = sliderState.findTileIndexByTopLeftAtPoint(colIndex, rowIndex);
         logger.info("The corresponding index for the clicked tile is {}", activeTileIndex);
     }
 
