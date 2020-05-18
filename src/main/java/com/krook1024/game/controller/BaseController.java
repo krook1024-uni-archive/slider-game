@@ -34,7 +34,7 @@ public class BaseController {
     /**
      * Sets the scene on the specified stage.
      *
-     * @param stage        the stage to change scene root on
+     * @param stage        the stage to change scene on
      * @param resourceName the path to the new scene
      */
     protected void changeSceneTo(Stage stage, String resourceName) {
