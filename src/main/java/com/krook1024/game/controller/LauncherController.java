@@ -1,13 +1,26 @@
 package com.krook1024.game.controller;
 
+import com.krook1024.game.main.App;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 /**
  * Acts as a controller for the launcher view.
  */
 public class LauncherController extends BaseController {
+
+    @FXML
+    public TextField nameField;
+
     /**
      * Called when the user clicks the start game button on the launcher.
      *
@@ -15,7 +28,23 @@ public class LauncherController extends BaseController {
      */
     @FXML
     private void onStartGameButtonClicked(ActionEvent event) {
-        changeSceneTo(getStageOfEvent(event), "/fxml/nameform.fxml");
+        String name = nameField.getText();
+        if (name != null && name.length() > 0) {
+            FXMLLoader fxmlLoader = App.getFxmlLoader("/fxml/game.fxml");
+            try {
+                Parent root = fxmlLoader.load();
+                Stage stage = getStageOfEvent(event);
+                GameController gameController = fxmlLoader.getController();
+                gameController.setName(name);
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException e) {
+                logger.warn("Something is wrong", e);
+            }
+        } else {
+            nameField.setStyle("-fx-background-color: salmon; -fx-border-color: firebrick;");
+            nameField.requestFocus();
+        }
     }
 
     /**
