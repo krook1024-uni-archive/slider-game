@@ -1,5 +1,7 @@
-package com.krook1024.game.state;
+package test;
 
+import com.krook1024.game.state.*;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -38,7 +40,7 @@ class SliderStateTest {
                 botLeft = new Point(4, 2),
                 botRight = new Point(5, 2);
 
-        assertEquals(new Tile(TileType.TYPE5, topLeft, topRight, botLeft, botRight), state.getTiles().get(4));
+        Assertions.assertEquals(new Tile(TileType.TYPE5, topLeft, topRight, botLeft, botRight), state.getTiles().get(4));
     }
 
     @Test

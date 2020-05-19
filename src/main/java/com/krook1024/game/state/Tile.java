@@ -6,6 +6,9 @@ import lombok.NonNull;
 
 import static com.krook1024.game.state.Direction.*;
 
+/**
+ * The class representing a tile on the board.
+ */
 @Data
 @EqualsAndHashCode
 public class Tile {
@@ -15,6 +18,14 @@ public class Tile {
     @NonNull
     private TileType type = TileType.TYPE1;
 
+    /**
+     * Initializes a tile with the given parameters.
+     * @param tileType the type of the tyle
+     * @param topLeft the position of the top left of the tile
+     * @param topRight the position of the top right of the tile
+     * @param botLeft the position of the bottom left of the tile
+     * @param botRight the position of the bottom right of the tile
+     */
     public Tile(TileType tileType, Point topLeft, Point topRight, Point botLeft, Point botRight) {
         if (Tile.isValidTile(tileType, topLeft, topRight, botLeft, botRight)) {
             this.type = tileType;
@@ -39,6 +50,7 @@ public class Tile {
     /**
      * Static function to check whether a tile is valid without needing to have an actual Tile instance.
      *
+     * @param type the type of the tile
      * @param topLeft  the top left co-ordinate of the tile
      * @param topRight the top right co-ordinate of the tile
      * @param botLeft  the bottom left co-ordinate of the tile
@@ -55,46 +67,22 @@ public class Tile {
         switch (type) {
             case EMPTY:
                 return false;
-            /*
-                    X X
-                    X
-             */
             case TYPE1:
                 return (topLeft.getY() == topRight.getY()) &&
                         (topLeft.getX() == botRight.getX()) &&
                         (botLeft.distanceTo(botRight) == 0);
-
-            /*
-                    X X
-                      X
-             */
             case TYPE2:
                 return (topLeft.getY() == topRight.getY()) &&
                         (topRight.getX() == botRight.getX()) &&
                         (botLeft.distanceTo(botRight) == 0);
-
-            /*
-                    X
-                    X X
-             */
             case TYPE3:
                 return (botLeft.getY() == botRight.getY()) &&
                         (botLeft.getX() == topLeft.getX()) &&
                         (topLeft.distanceTo(topRight) == 0);
-
-            /*
-                      X
-                    X X
-             */
             case TYPE4:
                 return (botLeft.getY() == botRight.getY()) &&
                         (botRight.getX() == topRight.getX()) &&
                         (topRight.distanceTo(topLeft) == 0);
-
-            /*
-                    X X
-                    X X
-             */
             case TYPE5:
                 return (topLeft.distanceTo(botRight) < 2) &&
                         (botLeft.distanceTo(topRight) < 2);
@@ -105,6 +93,7 @@ public class Tile {
     /**
      * Returns whether the tile is at the edge of the grid.
      *
+     * @param axis the axis to check
      * @return whether the tile is at the edge of the grid (-1 if it's at the left edge, 1 if it's at the right edge, 0 if it's not at the edge)
      */
     private Direction isAtEdge(Axis axis) {

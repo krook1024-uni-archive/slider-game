@@ -19,7 +19,7 @@ import java.io.IOException;
 public class LauncherController extends BaseController {
 
     @FXML
-    public TextField nameField;
+    private TextField nameField;
 
     /**
      * Called when the user clicks the start game button on the launcher.

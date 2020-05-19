@@ -43,6 +43,11 @@ public class GameController extends BaseController {
     @FXML
     GridPane gameGrid;
 
+    /**
+     * Sets the name to the one specified as the parameter.
+     *
+     * @param name the new name
+     */
     public void setName(String name) {
         this.name = name;
     }
@@ -91,7 +96,7 @@ public class GameController extends BaseController {
     }
 
     /**
-     * Formats seconds as H:MM:SS
+     * Formats seconds as H:MM:SS.
      *
      * @param seconds the seconds to format
      * @return the formatted string
@@ -100,7 +105,10 @@ public class GameController extends BaseController {
         return String.format("%d:%02d:%02d", seconds / 3600, (seconds % 3600) / 60, (seconds % 60));
     }
 
-    public void draw() {
+    /**
+     * Draws the current {@code SliderState} to the {@code gameGrid} GridPanepublic.
+     */
+    private void draw() {
         gameGrid.getChildren().clear();
         for (int i = 0; i < sliderState.getTiles().size(); i++) {
             Tile t = sliderState.getTiles().get(i);
@@ -140,28 +148,28 @@ public class GameController extends BaseController {
     }
 
     @FXML
-    public void stepLeft(ActionEvent event) {
+    private void stepLeft(ActionEvent event) {
         sliderState.stepTileWithIndex(activeTileIndex, Direction.LEFT, Axis.X);
         steps.set(steps.get() + 1);
         draw();
     }
 
     @FXML
-    public void stepRight(ActionEvent event) {
+    private void stepRight(ActionEvent event) {
         sliderState.stepTileWithIndex(activeTileIndex, Direction.RIGHT, Axis.X);
         steps.set(steps.get() + 1);
         draw();
     }
 
     @FXML
-    public void stepUp(ActionEvent event) {
+    private void stepUp(ActionEvent event) {
         sliderState.stepTileWithIndex(activeTileIndex, Direction.UP, Axis.Y);
         steps.set(steps.get() + 1);
         draw();
     }
 
     @FXML
-    public void stepDown(ActionEvent event) {
+    private void stepDown(ActionEvent event) {
         sliderState.stepTileWithIndex(activeTileIndex, Direction.DOWN, Axis.Y);
         steps.set(steps.get() + 1);
         draw();

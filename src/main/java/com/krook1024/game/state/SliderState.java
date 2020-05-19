@@ -7,15 +7,25 @@ import lombok.Setter;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * This class represents the current state of the game.
+ */
 @Data
 public class SliderState {
     @Setter(AccessLevel.NONE)
     private List<Tile> tiles;
 
+    /**
+     * Initializes the state with the default tiles.
+     */
     public SliderState() {
         initialize();
     }
 
+    /**
+     * Initializes the state by setting the tiles to the specified ones.
+     * @param tiles the list of the tiles
+     */
     public SliderState(List<Tile> tiles) {
         this.tiles = tiles;
     }

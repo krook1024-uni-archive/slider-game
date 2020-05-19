@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 
+/**
+ * This class represents a point.
+ */
 @Data
 @AllArgsConstructor
 @EqualsAndHashCode

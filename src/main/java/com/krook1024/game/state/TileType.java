@@ -1,11 +1,42 @@
 package com.krook1024.game.state;
 
+/**
+ * This enum represents a tile type.
+ */
 public enum TileType {
+    /**
+     * An empty tile.
+     */
     EMPTY, // unused
+    /**
+     * A tile with the following structure.
+     * x x
+     * x
+     */
     TYPE1,
+    /**
+     * A tile with the following structure.
+     * x x
+     *   x
+     */
     TYPE2,
+    /**
+     * A tile with the following structure.
+     * x
+     * x x
+     */
     TYPE3,
+    /**
+     * A tile with the following structure.
+     *   x
+     * x x
+     */
     TYPE4,
+    /**
+     * A tile with the following structure.
+     * x x
+     * x x
+     */
     TYPE5;
 
     /**
