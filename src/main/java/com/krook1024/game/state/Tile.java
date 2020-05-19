@@ -139,7 +139,6 @@ public class Tile {
 
         switch (axis) {
             case X:
-
                 topLeft.setX(topLeft.getX() + direction.getValue());
                 topRight.setX(topRight.getX() + direction.getValue());
                 botLeft.setX(botLeft.getX() + direction.getValue());
