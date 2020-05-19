@@ -96,13 +96,8 @@ public class HighScoreController extends BaseController {
         highScoreTable.setItems(observableResult);
     }
 
-    public void handleRestartButton(ActionEvent actionEvent) throws IOException {
-        logger.debug("{} is pressed", ((Button) actionEvent.getSource()).getText());
-        logger.info("Loading launch scene...");
-        fxmlLoader.setLocation(getClass().getResource("/fxml/launch.fxml"));
-        Parent root = fxmlLoader.load();
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.show();
+    @FXML
+    private void onMainMenuButtonClicked(ActionEvent event) {
+        changeSceneTo(getStageOfEvent(event), "/fxml/launcher.fxml");
     }
 }
