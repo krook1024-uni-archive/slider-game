@@ -26,7 +26,6 @@
             <organization>Faculty of Informatics, University of Debrecen</organization>
             <organizationUrl>https://inf.unideb.hu/</organizationUrl>
         </developer>
-
     </developers>
 
     <properties>
@@ -34,8 +33,10 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <exec.mainClass>com.krook1024.game.main.Main</exec.mainClass>
+        <exec.cleanupDaemonThreads>false</exec.cleanupDaemonThreads>
         <tinylog.version>2.1.1</tinylog.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.slf4j</groupId>
