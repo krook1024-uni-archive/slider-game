@@ -46,8 +46,10 @@ public class Tile {
      * @return whether the tile is valid or not.
      */
     public static boolean isValidTile(TileType type, Point topLeft, Point topRight, Point botLeft, Point botRight) {
-        if (topLeft.distanceTo(botRight) > 2 || topRight.distanceTo(botLeft) > 2) {
-            return false;
+        if (type != TileType.TYPE5) {
+            if (topLeft.distanceTo(botRight) > 2 || topRight.distanceTo(botLeft) > 2) {
+                return false;
+            }
         }
 
         switch (type) {
@@ -94,8 +96,8 @@ public class Tile {
                     X X
              */
             case TYPE5:
-                return (topLeft.distanceTo(topLeft) == 1) &&
-                        (botLeft.distanceTo(botRight) == 1);
+                return (topLeft.distanceTo(botRight) < 2) &&
+                        (botLeft.distanceTo(topRight) < 2);
         }
         return false;
     }
