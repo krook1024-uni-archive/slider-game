@@ -70,7 +70,6 @@ class SliderStateTest {
                 new Tile(TileType.TYPE5, new Point(1, 1), new Point(2, 1), new Point(1, 2), new Point(2, 2))
         );
         SliderState solvedState = new SliderState(tiles);
-        System.out.println("solvedState = " + solvedState);
         assertTrue(solvedState.isSolved());
     }
 }
