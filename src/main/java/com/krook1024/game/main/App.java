@@ -2,8 +2,6 @@ package com.krook1024.game.main;
 
 import com.gluonhq.ignite.guice.GuiceContext;
 import com.google.inject.AbstractModule;
-import com.krook1024.game.results.GameResultDao;
-import com.krook1024.game.util.guice.PersistenceModule;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,6 +11,8 @@ import org.apache.maven.model.Model;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 import org.slf4j.LoggerFactory;
+import com.krook1024.game.results.GameResultDao;
+import com.krook1024.game.util.guice.PersistenceModule;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -22,6 +22,15 @@ import java.util.List;
  * The class that controls the application GUI.
  */
 public class App extends Application {
+    private GuiceContext context = new GuiceContext(this, () -> List.of(
+            new AbstractModule() {
+                @Override
+                protected void configure() {
+                    install(new PersistenceModule("slider-game"));
+                    bind(GameResultDao.class);
+                }
+            }
+    ));
 
     /**
      * Specifies the width of the app window.
@@ -35,19 +44,11 @@ public class App extends Application {
 
     private static org.slf4j.Logger logger = LoggerFactory.getLogger(App.class);
 
-    private GuiceContext context = new GuiceContext(this, () -> List.of(
-            new AbstractModule() {
-                @Override
-                protected void configure() {
-                    install(new PersistenceModule("rolling-cubes"));
-                    bind(GameResultDao.class);
-                }
-            }
-    ));
 
     @Override
     public void start(Stage stage) {
         logger.info("Starting slider-game...");
+        context.init();
         long startTime = System.nanoTime();
 
         setAppTitleWithVersion(stage);
@@ -57,8 +58,8 @@ public class App extends Application {
 
         try {
             FXMLLoader launcherSceneLoader = getFxmlLoader("/fxml/launcher.fxml");
-            Parent launcherSceneRoot = launcherSceneLoader.load();
-            stage.setScene(new Scene(launcherSceneRoot));
+            Parent root = launcherSceneLoader.load();
+            stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
             logger.error("Something is wrong", e);
