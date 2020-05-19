@@ -1,8 +1,6 @@
 package com.krook1024.game.controller;
 
 import com.google.inject.Inject;
-import com.krook1024.game.results.GameResult;
-import com.krook1024.game.results.GameResultDao;
 import com.krook1024.game.state.Axis;
 import com.krook1024.game.state.Direction;
 import com.krook1024.game.state.SliderState;
@@ -24,6 +22,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
+import com.krook1024.game.results.GameResult;
+import com.krook1024.game.results.GameResultDao;
 
 import java.time.Instant;
 import java.util.List;
@@ -77,6 +77,7 @@ public class GameController extends BaseController {
         gameOver.addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 logger.info("Game is over");
+                gameOver.setValue(false);
                 logger.debug("Saving result to database...");
                 gameResultDao.persist(createGameResult());
                 clock.stop();
@@ -90,7 +91,7 @@ public class GameController extends BaseController {
                 .player(name)
                 .solved(sliderState.isSolved())
                 .duration(java.time.Duration.between(startTime, Instant.now()))
-                .steps(steps.get())
+                .steps(steps.getValue())
                 .build();
         return null;
     }
@@ -107,6 +108,7 @@ public class GameController extends BaseController {
         clock = getClockTimeline();
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
+        gameOver.setValue(false);
         draw();
     }
 
@@ -179,30 +181,34 @@ public class GameController extends BaseController {
     }
 
     @FXML
-    private void stepLeft(ActionEvent event) {
-        sliderState.stepTileWithIndex(activeTileIndex, Direction.LEFT, Axis.X);
-        steps.set(steps.get() + 1);
-        draw();
+    private void onStepClick(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        String accessibleText = source.getAccessibleText();
+        if ( ! sliderState.isSolved() && ! gameOver.getValue() && activeTileIndex != -1) {
+            logger.debug("Stepping cube {} in the direction {}", activeTileIndex, accessibleText);
+            switch (accessibleText) {
+                case "UP":
+                    sliderState.stepTileWithIndex(activeTileIndex, Direction.UP, Axis.Y);
+                    break;
+                case "DOWN":
+                    sliderState.stepTileWithIndex(activeTileIndex, Direction.DOWN, Axis.Y);
+                    break;
+                case "LEFT":
+                    sliderState.stepTileWithIndex(activeTileIndex, Direction.LEFT, Axis.X);
+                    break;
+                case "RIGHT":
+                    sliderState.stepTileWithIndex(activeTileIndex, Direction.RIGHT, Axis.X);
+            }
+            steps.set(steps.get() + 1);
+            draw();
+        }
     }
 
     @FXML
-    private void stepRight(ActionEvent event) {
-        sliderState.stepTileWithIndex(activeTileIndex, Direction.RIGHT, Axis.X);
-        steps.set(steps.get() + 1);
-        draw();
-    }
-
-    @FXML
-    private void stepUp(ActionEvent event) {
-        sliderState.stepTileWithIndex(activeTileIndex, Direction.UP, Axis.Y);
-        steps.set(steps.get() + 1);
-        draw();
-    }
-
-    @FXML
-    private void stepDown(ActionEvent event) {
-        sliderState.stepTileWithIndex(activeTileIndex, Direction.DOWN, Axis.Y);
-        steps.set(steps.get() + 1);
-        draw();
+    private void onGiveUpButtonClicked(ActionEvent event) {
+        if ( ! gameOver.getValue()) {
+            gameOver.setValue(true);
+            clock.stop();
+        }
     }
 }
