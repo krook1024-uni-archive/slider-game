@@ -87,13 +87,12 @@ public class GameController extends BaseController {
     }
 
     private GameResult createGameResult() {
-        GameResult result = GameResult.builder()
+        return GameResult.builder()
                 .player(name)
                 .solved(sliderState.isSolved())
                 .duration(java.time.Duration.between(startTime, Instant.now()))
-                .steps(steps.getValue())
+                .steps(steps.get())
                 .build();
-        return null;
     }
 
     private void resetGame() {
