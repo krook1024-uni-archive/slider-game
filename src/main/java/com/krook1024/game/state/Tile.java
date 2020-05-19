@@ -46,6 +46,9 @@ public class Tile {
      * @return whether the tile is valid or not.
      */
     public static boolean isValidTile(TileType type, Point topLeft, Point topRight, Point botLeft, Point botRight) {
+        if (topLeft.distanceTo(botRight) > 2 || topRight.distanceTo(botLeft) > 2) {
+            return false;
+        }
 
         switch (type) {
             case EMPTY:
@@ -91,7 +94,8 @@ public class Tile {
                     X X
              */
             case TYPE5:
-                return true;
+                return (topLeft.distanceTo(topLeft) == 1) &&
+                        (botLeft.distanceTo(botRight) == 1);
         }
         return false;
     }
@@ -129,7 +133,7 @@ public class Tile {
     /**
      * Steps a tile across the X axis.
      *
-     * @param direction the direction
+     * @param direction the direction (LEFT | RIGHT)
      */
     public void stepAcrossX(Direction direction) {
         if (isAtXEdge() == 1 && direction == RIGHT || isAtXEdge() == -1 && direction == LEFT) {
@@ -142,6 +146,11 @@ public class Tile {
         botRight.setX(botRight.getX() + direction.getValue());
     }
 
+    /**
+     * Steps a tile across the Y axis.
+     *
+     * @param direction the direction (UP | DOWN)
+     */
     public void stepAcrossY(Direction direction) {
         if (isAtYEdge() == 1 && direction == DOWN || isAtYEdge() == -1 && direction == UP) {
             return;
