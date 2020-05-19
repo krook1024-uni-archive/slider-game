@@ -1,5 +1,6 @@
 package com.krook1024.game.controller;
 
+import com.krook1024.game.state.Axis;
 import com.krook1024.game.state.Direction;
 import com.krook1024.game.state.SliderState;
 import com.krook1024.game.state.Tile;
@@ -140,28 +141,28 @@ public class GameController extends BaseController {
 
     @FXML
     public void stepLeft(ActionEvent event) {
-        sliderState.stepTileWithIndexAcrossX(activeTileIndex, Direction.LEFT);
+        sliderState.stepTileWithIndex(activeTileIndex, Direction.LEFT, Axis.X);
         steps.set(steps.get() + 1);
         draw();
     }
 
     @FXML
     public void stepRight(ActionEvent event) {
-        sliderState.stepTileWithIndexAcrossX(activeTileIndex, Direction.RIGHT);
+        sliderState.stepTileWithIndex(activeTileIndex, Direction.RIGHT, Axis.X);
         steps.set(steps.get() + 1);
         draw();
     }
 
     @FXML
     public void stepUp(ActionEvent event) {
-        sliderState.stepTileWithIndexAcrossY(activeTileIndex, Direction.UP);
+        sliderState.stepTileWithIndex(activeTileIndex, Direction.UP, Axis.Y);
         steps.set(steps.get() + 1);
         draw();
     }
 
     @FXML
     public void stepDown(ActionEvent event) {
-        sliderState.stepTileWithIndexAcrossY(activeTileIndex, Direction.DOWN);
+        sliderState.stepTileWithIndex(activeTileIndex, Direction.DOWN, Axis.Y);
         steps.set(steps.get() + 1);
         draw();
     }
