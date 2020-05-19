@@ -1,6 +1,7 @@
 package com.krook1024.game.controller;
 
 import com.krook1024.game.main.App;
+import com.krook1024.game.results.GameResultDao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -9,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Inject;
 import java.io.IOException;
 
 /**
