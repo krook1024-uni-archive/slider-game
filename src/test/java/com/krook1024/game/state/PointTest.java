@@ -1,4 +1,4 @@
-package test;
+package com.krook1024.game.state;
 
 import com.krook1024.game.state.Point;
 import org.junit.jupiter.api.Test;

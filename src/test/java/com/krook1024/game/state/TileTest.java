@@ -1,4 +1,4 @@
-package test;
+package com.krook1024.game.state;
 
 import com.krook1024.game.state.Axis;
 import com.krook1024.game.state.Point;
@@ -53,7 +53,7 @@ class TileTest {
         assertEquals(new Tile(TileType.TYPE1, new Point(0, 0), new Point(1, 0), new Point(0, 1), new Point(0, 1)), tile);
         tile.step(UP, Axis.Y);
         assertEquals(new Tile(TileType.TYPE1, new Point(0, 0), new Point(1, 0), new Point(0, 1), new Point(0, 1)), tile);
-        IntStream.range(0, 100).forEach(i -> tile.step(RIGHT, X));
+        IntStream.range(0, 100).forEach(i -> tile.step(DOWN, Axis.Y));
         assertEquals(new Tile(TileType.TYPE1, new Point(0, 2), new Point(1, 2), new Point(0, 3), new Point(0, 3)), tile);
     }
 }
