@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
@@ -20,8 +21,15 @@ import java.io.IOException;
  * @version 1.0
  * @since 1.0
  */
+@Slf4j
 public class BaseController {
     protected org.slf4j.Logger logger = LoggerFactory.getLogger(getClass());
+
+    @Inject
+    FXMLLoader fxmlLoader;
+
+    @Inject
+    GameResultDao gameResultDao;
 
     /**
      * Finds the stage of an event.
@@ -41,8 +49,8 @@ public class BaseController {
      */
     protected void changeSceneTo(Stage stage, String resourceName) {
         logger.info("Changing scene to: {}", resourceName);
-        FXMLLoader fxmlLoader = App.getFxmlLoader(resourceName);
         try {
+            fxmlLoader.setLocation(getClass().getResource(resourceName));
             Parent root = fxmlLoader.load();
             stage.setScene(new Scene(root));
             stage.show();

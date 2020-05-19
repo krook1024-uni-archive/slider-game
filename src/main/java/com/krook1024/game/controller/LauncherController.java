@@ -30,8 +30,8 @@ public class LauncherController extends BaseController {
     private void onStartGameButtonClicked(ActionEvent event) {
         String name = nameField.getText();
         if (name != null && name.length() > 0) {
-            FXMLLoader fxmlLoader = App.getFxmlLoader("/fxml/game.fxml");
             try {
+                fxmlLoader.setLocation(getClass().getResource("/fxml/game.fxml"));
                 Parent root = fxmlLoader.load();
                 Stage stage = getStageOfEvent(event);
                 GameController gameController = fxmlLoader.getController();

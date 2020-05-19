@@ -2,11 +2,13 @@ package com.krook1024.game.main;
 
 import com.gluonhq.ignite.guice.GuiceContext;
 import com.google.inject.AbstractModule;
+import com.google.inject.Inject;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
@@ -21,16 +23,24 @@ import java.util.List;
 /**
  * The class that controls the application GUI.
  */
+@Slf4j
 public class App extends Application {
+
     private GuiceContext context = new GuiceContext(this, () -> List.of(
             new AbstractModule() {
                 @Override
                 protected void configure() {
-                    install(new PersistenceModule("slider-game"));
+                    install(new PersistenceModule("slidergame"));
                     bind(GameResultDao.class);
                 }
             }
     ));
+
+    @Inject
+    private FXMLLoader fxmlLoader;
+
+    @Inject
+    private GameResultDao gameResultDao;
 
     /**
      * Specifies the width of the app window.
@@ -50,15 +60,16 @@ public class App extends Application {
         logger.info("Starting slider-game...");
         context.init();
         long startTime = System.nanoTime();
+        logger.trace("gameResultDao: {}", gameResultDao);
 
-        setAppTitleWithVersion(stage);
+        stage.setTitle("slider-game");
         stage.setWidth(appWidth);
         stage.setHeight(appHeight);
         stage.setResizable(false);
 
         try {
-            FXMLLoader launcherSceneLoader = getFxmlLoader("/fxml/launcher.fxml");
-            Parent root = launcherSceneLoader.load();
+            fxmlLoader.setLocation(getClass().getResource("/fxml/launcher.fxml"));
+            Parent root = fxmlLoader.load();
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
@@ -67,45 +78,5 @@ public class App extends Application {
 
         long elapsedTime = System.nanoTime() - startTime;
         logger.info("Started application in {} ms", elapsedTime / 1000000);
-    }
-
-    /**
-     * Gets an {@code FXMLLoader} instance to the specified resource.
-     *
-     * @param resourceName the name of the resource that has to be loaded
-     * @return the loader instance
-     */
-    public static FXMLLoader getFxmlLoader(String resourceName) {
-        logger.info("Loading resource: {}", resourceName);
-        return new FXMLLoader(App.class.getResource(resourceName));
-    }
-
-    /**
-     * Sets the stage's title according to the project version in pom.xml.
-     *
-     * @param stage the stage whose title has to be set
-     */
-    private void setAppTitleWithVersion(Stage stage) {
-        try {
-            stage.setTitle("slider-game " + getProjectVersionFromPom());
-        } catch (Exception e) {
-            stage.setTitle("slider-game");
-        }
-    }
-
-    /**
-     * Find the the project version in pom.xml and returns it.
-     *
-     * @return the project version
-     */
-    private String getProjectVersionFromPom() {
-        try {
-            MavenXpp3Reader reader = new MavenXpp3Reader();
-            Model model = reader.read(new FileReader("pom.xml"));
-            return model.getVersion();
-        } catch (IOException | XmlPullParserException e) {
-            logger.error("Something is wrong", e);
-        }
-        return null;
     }
 }
