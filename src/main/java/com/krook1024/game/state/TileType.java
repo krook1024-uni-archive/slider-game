@@ -45,7 +45,7 @@ public enum TileType {
      * @param value the value representing an instance
      * @return the instance represented by the value specified.
      */
-    public TileType of(int value) {
+    public static TileType of(int value) {
         if (value < 0 || value >= values().length) {
             throw new IllegalArgumentException();
         }
