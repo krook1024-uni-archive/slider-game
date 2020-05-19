@@ -16,6 +16,10 @@ public class SliderState {
         initialize();
     }
 
+    public SliderState(List<Tile> tiles) {
+        this.tiles = tiles;
+    }
+
     private void initialize() {
         tiles = List.of(
                 new Tile(TileType.TYPE1, new Point(0, 0), new Point(1, 0), new Point(0, 1), new Point(0, 1)),
@@ -158,7 +162,6 @@ public class SliderState {
      */
     public boolean isEmptySpace(int x, int y) {
         List<Tile> tilesAtPoint = tiles.stream().filter(tile -> findTileIndexAtPoint(x, y) != -1).collect(Collectors.toList());
-        System.out.println("tilesAtPoint = " + tilesAtPoint);
         return tilesAtPoint.size() == 0;
     }
 
@@ -190,6 +193,34 @@ public class SliderState {
             case Y:
                 return isEmptySpace(x, y + direction.getValue());
         }
+        return true;
+    }
+
+    /**
+     * Tells whether the game is solved.
+     * @return whether the game is solved
+     */
+    public boolean isSolved() {
+        Tile fullTile = tiles.get(tiles.size() - 1);
+
+        // The game is solved if there is no empty space around the full tile.
+
+        if (isEmptySpaceNextToPoint(fullTile.getTopLeft(), Direction.UP, Axis.Y) ||
+            isEmptySpaceNextToPoint(fullTile.getTopLeft(), Direction.LEFT, Axis.X))
+            return false;
+
+        if (isEmptySpaceNextToPoint(fullTile.getTopRight(), Direction.UP, Axis.Y) ||
+            isEmptySpaceNextToPoint(fullTile.getTopRight(), Direction.RIGHT, Axis.X))
+            return false;
+
+        if (isEmptySpaceNextToPoint(fullTile.getBotLeft(), Direction.DOWN, Axis.Y) ||
+            isEmptySpaceNextToPoint(fullTile.getBotLeft(), Direction.LEFT, Axis.X))
+            return false;
+
+        if (isEmptySpaceNextToPoint(fullTile.getBotRight(), Direction.DOWN, Axis.Y) ||
+            isEmptySpaceNextToPoint(fullTile.getBotRight(), Direction.RIGHT, Axis.X))
+            return false;
+
         return true;
     }
 }
