@@ -195,6 +195,7 @@
                             </manifestEntries>
                         </transformer>
                     </transformers>
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
                 </configuration>
                 <executions>
                     <execution>
