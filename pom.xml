@@ -12,6 +12,21 @@
             <name>Antal Albert Molnár</name>
             <email>krook1024@gmail.com</email>
         </developer>
+        <developer>
+            <id>jeszy</id>
+            <name>Péter Jeszenszky</name>
+            <email>jeszenszky.peter@inf.unideb.hu</email>
+            <organization>Faculty of Informatics, University of Debrecen</organization>
+            <organizationUrl>https://inf.unideb.hu/</organizationUrl>
+        </developer>
+        <developer>
+            <id>roland</id>
+            <name>Roland Major</name>
+            <email>major.sandor@inf.unideb.hu</email>
+            <organization>Faculty of Informatics, University of Debrecen</organization>
+            <organizationUrl>https://inf.unideb.hu/</organizationUrl>
+        </developer>
+
     </developers>
 
     <properties>
@@ -104,6 +119,12 @@
             <groupId>com.gluonhq</groupId>
             <artifactId>ignite-guice</artifactId>
             <version>1.0.2</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.10</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
