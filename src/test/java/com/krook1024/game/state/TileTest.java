@@ -25,6 +25,12 @@ class TileTest {
     }
 
     @Test
+    void isValid() {
+        Tile tile = new Tile(TileType.TYPE5, new Point(4, 2), new Point(5, 2), new Point(4, 3), new Point(5, 3));
+        assertTrue(tile.isValid());
+    }
+
+    @Test
     void isValidTile() {
         assertFalse(Tile.isValidTile(TileType.TYPE1, new Point(0, 0), new Point(3, 0), new Point(0, 1), new Point(0, 1)));
         assertTrue(Tile.isValidTile(TileType.TYPE1, new Point(0, 0), new Point(1, 0), new Point(0, 1), new Point(0, 1)));

@@ -26,8 +26,17 @@ class SliderStateTest {
         int i = state.findTileIndexByTopLeftAtPoint(0, 0);
         assertEquals(0, i);
 
+        i = state.findTileIndexByTopLeftAtPoint(2, 0);
+        assertEquals(1, i);
+
+        i = state.findTileIndexByTopLeftAtPoint(0, 2);
+        assertEquals(2, i);
+
         i = state.findTileIndexByTopLeftAtPoint(2, 2);
         assertEquals(3, i);
+
+        i = state.findTileIndexByTopLeftAtPoint(4, 2);
+        assertEquals(4, i);
     }
 
     @Test
@@ -41,13 +50,15 @@ class SliderStateTest {
                 botRight = new Point(5, 2);
 
         Assertions.assertEquals(new Tile(TileType.TYPE5, topLeft, topRight, botLeft, botRight), state.getTiles().get(4));
+
+        assertThrows(IllegalArgumentException.class, () -> state.stepTileWithIndex(30, Direction.UP, Axis.Y));
     }
 
     @Test
     void isEmptySpace() {
         SliderState state = new SliderState();
         assertTrue(state.isEmptySpace(4, 0));
-        assertFalse(state.isEmptySpace(0, 0));
+        assertFalse(state.isEmptySpace(new Point(0, 0)));
     }
 
     @Test

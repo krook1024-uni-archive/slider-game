@@ -113,10 +113,10 @@ public class SliderState {
      * @param axis the axis
      */
     public void stepTileWithIndex(int index, Direction direction, Axis axis) {
-        Tile t = tiles.get(index);
-        if (tiles.get(index) == null) {
+        if (index < 0 || index > tiles.size()) {
             throw new IllegalArgumentException();
         }
+        Tile t = tiles.get(index);
 
         switch (axis) {
             case X:
