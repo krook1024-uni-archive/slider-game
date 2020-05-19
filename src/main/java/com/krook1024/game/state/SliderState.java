@@ -104,6 +104,38 @@ public class SliderState {
             throw new IllegalArgumentException();
         }
 
+        switch (axis) {
+            case X:
+                switch (direction) {
+                    case LEFT:
+                        if (! isEmptySpaceNextToPoint(t.getTopLeft(), direction, axis) ||
+                                ! isEmptySpaceNextToPoint(t.getBotLeft(), direction, axis))
+                            return;
+                        break;
+                    case RIGHT:
+                        if (! isEmptySpaceNextToPoint(t.getTopRight(), direction, axis) ||
+                                ! isEmptySpaceNextToPoint(t.getBotRight(), direction, axis))
+                            return;
+                        break;
+                }
+                break;
+            case Y:
+                switch (direction) {
+                    case UP:
+                        if (! isEmptySpaceNextToPoint(t.getTopLeft(), direction, axis) ||
+                                ! isEmptySpaceNextToPoint(t.getTopRight(), direction, axis))
+                            return;
+                        break;
+                    case DOWN:
+                        if (! isEmptySpaceNextToPoint(t.getBotLeft(), direction, axis) ||
+                                ! isEmptySpaceNextToPoint(t.getBotRight(), direction, axis))
+                            return;
+                        break;
+                }
+
+                break;
+        }
+
         t.step(direction, axis);
     }
 
@@ -125,8 +157,9 @@ public class SliderState {
      * @return whether the point is empty
      */
     public boolean isEmptySpace(int x, int y) {
-        List<Tile> tilesAtPoint = tiles.stream().filter(tile -> findTileIndexAtPoint(x, y) <= 0).collect(Collectors.toList());
-        return tilesAtPoint.size() > 0;
+        List<Tile> tilesAtPoint = tiles.stream().filter(tile -> findTileIndexAtPoint(x, y) != -1).collect(Collectors.toList());
+        System.out.println("tilesAtPoint = " + tilesAtPoint);
+        return tilesAtPoint.size() == 0;
     }
 
     /**
