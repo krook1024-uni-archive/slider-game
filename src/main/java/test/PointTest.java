@@ -6,6 +6,15 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PointTest {
+    @Test
+    void Point() {
+        Point a = new Point(0, 0);
+        Point b = new Point(0, 1);
+        assertEquals(0, a.getX());
+        assertEquals(0, a.getY());
+        assertEquals(0, b.getX());
+        assertEquals(1, b.getY());
+    }
 
     @Test
     void distanceTo() {

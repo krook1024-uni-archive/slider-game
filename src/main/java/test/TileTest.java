@@ -12,8 +12,20 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TileTest {
     @Test
-    void isValid() {
-        assertTrue(true);
+    void Tile() {
+        assertThrows(IllegalArgumentException.class, () -> new Tile(TileType.TYPE1, new Point(0, 0), new Point(3, 0), new Point(0, 1), new Point(0, 1)));
+
+        Tile tile = new Tile(TileType.TYPE1, new Point(0, 0), new Point(1, 0), new Point(0, 1), new Point(0, 1));
+        assertEquals(new Point(0, 0), tile.getTopLeft());
+        assertEquals(new Point(1, 0), tile.getTopRight());
+        assertEquals(new Point(0, 1), tile.getBotLeft());
+        assertEquals(new Point(0, 1), tile.getBotRight());
+    }
+
+    @Test
+    void isValidTile() {
+        assertFalse(Tile.isValidTile(TileType.TYPE1, new Point(0, 0), new Point(3, 0), new Point(0, 1), new Point(0, 1)));
+        assertTrue(Tile.isValidTile(TileType.TYPE1, new Point(0, 0), new Point(1, 0), new Point(0, 1), new Point(0, 1)));
     }
 
     @Test
