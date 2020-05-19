@@ -7,7 +7,7 @@
 <AnchorPane prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.krook1024.game.controller.GameController">
     <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" spacing="20.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
         <children>
-            <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER" fillHeight="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                 <children>
                     <Label fx:id="usernameLabel" text="Hello, User" />
                     <Pane maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
@@ -22,6 +22,8 @@
                      <Insets left="5.0" />
                   </HBox.margin>
                </Label>
+               <Pane layoutX="77.0" layoutY="24.0" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+               <Button fx:id="giveUpButton" mnemonicParsing="false" onAction="#onGiveUpButtonClicked" text="Give up" />
                 </children>
             </HBox>
          <GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
@@ -37,7 +39,7 @@
                <RowConstraints vgrow="SOMETIMES" />
            </rowConstraints>
             <children>
-                  <GridPane fx:id="gameGrid" alignment="CENTER" prefHeight="320.0" prefWidth="480.0" style="-fx-grid-lines-visible: true;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <GridPane fx:id="gameGrid" alignment="CENTER" prefHeight="320.0" prefWidth="480.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                       <columnConstraints>
                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="60.0" />
                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="60.0" />
@@ -53,10 +55,10 @@
                           <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
                       </rowConstraints>
                   </GridPane>
-               <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#stepLeft" text="🡄" GridPane.rowIndex="1" />
-               <Button alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="151.0" mnemonicParsing="false" onAction="#stepRight" text="🡆" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-               <Button alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="167.0" mnemonicParsing="false" onAction="#stepUp" text="🡅" GridPane.columnIndex="1" />
-               <Button alignment="CENTER" contentDisplay="CENTER" layoutX="83.0" layoutY="5.0" mnemonicParsing="false" onAction="#stepDown" text="🡇" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+               <Button accessibleText="LEFT" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onStepClick" text="🡄" GridPane.rowIndex="1" />
+               <Button accessibleText="RIGHT" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="151.0" mnemonicParsing="false" onAction="#onStepClick" text="🡆" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+               <Button accessibleText="UP" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="167.0" mnemonicParsing="false" onAction="#onStepClick" text="🡅" GridPane.columnIndex="1" />
+               <Button accessibleText="DOWN" alignment="CENTER" contentDisplay="CENTER" layoutX="83.0" layoutY="5.0" mnemonicParsing="false" onAction="#onStepClick" text="🡇" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             </children>
          </GridPane>
         </children>
