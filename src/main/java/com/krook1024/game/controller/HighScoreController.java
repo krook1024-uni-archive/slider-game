@@ -51,6 +51,7 @@ public class HighScoreController extends BaseController {
     @FXML
     private void initialize() {
         logger.debug("Loading high scores...");
+        logger.trace("gameResultDao: {}", gameResultDao);
         List<GameResult> highScoreList = gameResultDao.findBest(10);
 
         player.setCellValueFactory(new PropertyValueFactory<>("player"));
