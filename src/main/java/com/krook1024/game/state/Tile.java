@@ -107,60 +107,50 @@ public class Tile {
      *
      * @return whether the tile is at the edge of the grid (-1 if it's at the left edge, 1 if it's at the right edge, 0 if it's not at the edge)
      */
-    private int isAtXEdge() {
-        if (Math.min(topLeft.getX(), botLeft.getX()) == 0)
-            return -1;
+    private Direction isAtEdge(Axis axis) {
+        switch (axis) {
+            case X:
+                if (Math.min(topLeft.getX(), botLeft.getX()) == 0)
+                    return LEFT;
 
-        if (Math.max(topRight.getX(), botRight.getX()) == 5)
-            return 1;
+                if (Math.max(topRight.getX(), botRight.getX()) == 5)
+                    return RIGHT;
+                break;
+            case Y:
+                if (Math.min(topLeft.getY(), topRight.getY()) == 0)
+                    return UP;
 
-        return 0;
-    }
-
-    /**
-     * Returns whether the tile is at the edge of the grid.
-     *
-     * @return whether the tile is at the edge of the grid (-1 if it's at the left edge, 1 if it's at the right edge, 0 if it's not at the edge)
-     */
-    private int isAtYEdge() {
-        if (Math.min(topLeft.getY(), topRight.getY()) == 0)
-            return -1;
-
-        if (Math.max(botLeft.getY(), botRight.getY()) == 3)
-            return 1;
-
-        return 0;
-    }
-
-    /**
-     * Steps a tile across the X axis.
-     *
-     * @param direction the direction (LEFT | RIGHT)
-     */
-    public void stepAcrossX(Direction direction) {
-        if (isAtXEdge() == 1 && direction == RIGHT || isAtXEdge() == -1 && direction == LEFT) {
-            return;
+                if (Math.max(botLeft.getY(), botRight.getY()) == 3)
+                    return DOWN;
+                break;
         }
 
-        topLeft.setX(topLeft.getX() + direction.getValue());
-        topRight.setX(topRight.getX() + direction.getValue());
-        botLeft.setX(botLeft.getX() + direction.getValue());
-        botRight.setX(botRight.getX() + direction.getValue());
+        return NONE;
     }
 
     /**
-     * Steps a tile across the Y axis.
+     * Steps a tile across the specified axis.
      *
-     * @param direction the direction (UP | DOWN)
+     * @param direction the direction
+     * @param axis the axis
      */
-    public void stepAcrossY(Direction direction) {
-        if (isAtYEdge() == 1 && direction == DOWN || isAtYEdge() == -1 && direction == UP) {
-            return;
-        }
+    public void step(Direction direction, Axis axis) {
+        if (isAtEdge(axis) == direction) return;
 
-        topLeft.setY(topLeft.getY() + direction.getValue());
-        topRight.setY(topRight.getY() + direction.getValue());
-        botLeft.setY(botLeft.getY() + direction.getValue());
-        botRight.setY(botRight.getY() + direction.getValue());
+        switch (axis) {
+            case X:
+
+                topLeft.setX(topLeft.getX() + direction.getValue());
+                topRight.setX(topRight.getX() + direction.getValue());
+                botLeft.setX(botLeft.getX() + direction.getValue());
+                botRight.setX(botRight.getX() + direction.getValue());
+                break;
+            case Y:
+                topLeft.setY(topLeft.getY() + direction.getValue());
+                topRight.setY(topRight.getY() + direction.getValue());
+                botLeft.setY(botLeft.getY() + direction.getValue());
+                botRight.setY(botRight.getY() + direction.getValue());
+                break;
+        }
     }
 }

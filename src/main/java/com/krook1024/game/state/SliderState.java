@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.Setter;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Data
 public class SliderState {
@@ -90,35 +91,72 @@ public class SliderState {
         return -1;
     }
 
-    public void stepTileWithIndexAcrossX(int index, Direction direction) {
+    /**
+     * Steps a tile with the given index across the specified axis in the specified direction (LEFT | RIGHT).
+     *
+     * @param index the index of the tile in the tiles list
+     * @param direction the direction
+     * @param axis the axis
+     */
+    public void stepTileWithIndex(int index, Direction direction, Axis axis) {
         Tile t = tiles.get(index);
         if (tiles.get(index) == null) {
             throw new IllegalArgumentException();
         }
 
-        switch (direction) {
-            case LEFT:
-                t.stepAcrossX(Direction.LEFT);
-                break;
-            case RIGHT:
-                t.stepAcrossX(Direction.RIGHT);
-                break;
-        }
+        t.step(direction, axis);
     }
 
-    public void stepTileWithIndexAcrossY(int index, Direction direction) {
-        Tile t = tiles.get(index);
-        if (tiles.get(index) == null) {
-            throw new IllegalArgumentException();
-        }
+    /**
+     * Tells whether a point is empty.
+     *
+     * @param p the point
+     * @return whether the point is empty
+     */
+    public boolean isEmptySpace(Point p) {
+        return isEmptySpace(p.getX(), p.getY());
+    }
 
-        switch (direction) {
-            case UP:
-                t.stepAcrossY(Direction.UP);
-                break;
-            case DOWN:
-                t.stepAcrossY(Direction.DOWN);
-                break;
+    /**
+     * Tells whether a point is empty.
+     *
+     * @param x the x co-ordinate of the point
+     * @param y the y co-ordinate of the point
+     * @return whether the point is empty
+     */
+    public boolean isEmptySpace(int x, int y) {
+        List<Tile> tilesAtPoint = tiles.stream().filter(tile -> findTileIndexAtPoint(x, y) <= 0).collect(Collectors.toList());
+        return tilesAtPoint.size() > 0;
+    }
+
+    /**
+     * Tells whether a point next to the specified point across the
+     * specified axis in the specified direction is empty or not.
+     * @param p the point
+     * @param direction the direction
+     * @param axis the axis
+     * @return whether a point next to the specified point across the specified axis in the specified direction is empty
+     */
+    public boolean isEmptySpaceNextToPoint(Point p, Direction direction, Axis axis) {
+        return isEmptySpaceNextToPoint(p.getX(), p.getY(), direction, axis);
+    }
+
+    /**
+     * Tells whether a point next to the specified point across the
+     * specified axis in the specified direction is empty or not.
+     * @param x co-ordinate the x of the point
+     * @param y co-ordinate the y of the point
+     * @param direction the direction
+     * @param axis the axis
+     * @return whether a point next to the specified point across the specified axis in the specified direction is empty
+     */
+    public boolean isEmptySpaceNextToPoint(int x, int y, Direction direction, Axis axis) {
+        switch (axis) {
+            case X:
+                return isEmptySpace(x + direction.getValue(), y);
+            case Y:
+                return isEmptySpace(x, y + direction.getValue());
         }
+        return true;
     }
 }
