@@ -6,6 +6,7 @@
         <setting name="validation-enabled" value="true" />
         <datasource-mapping />
         <naming-strategy-map />
+        <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/resources/META-INF/persistence.xml" />
       </configuration>
     </facet>
   </component>
@@ -32,7 +33,6 @@
     <orderEntry type="library" name="Maven: org.openjfx:javafx-base:linux:14" level="project" />
     <orderEntry type="library" name="Maven: org.apache.maven:maven-model:3.3.9" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.plexus:plexus-utils:3.0.22" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.4" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:14.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:linux:14.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.projectlombok:lombok:1.18.12" level="project" />
@@ -75,5 +75,6 @@
     <orderEntry type="library" name="Maven: com.google.inject.extensions:guice-persist:4.2.3" level="project" />
     <orderEntry type="library" name="Maven: com.gluonhq:ignite-guice:1.0.2" level="project" />
     <orderEntry type="library" name="Maven: com.gluonhq:ignite-common:1.0.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.10" level="project" />
   </component>
 </module>
