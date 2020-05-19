@@ -1,5 +1,8 @@
 package com.krook1024.game.controller;
 
+import com.google.inject.Inject;
+import com.krook1024.game.results.GameResult;
+import com.krook1024.game.results.GameResultDao;
 import com.krook1024.game.state.Axis;
 import com.krook1024.game.state.Direction;
 import com.krook1024.game.state.SliderState;
@@ -8,7 +11,9 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -20,6 +25,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
 
+import java.time.Instant;
 import java.util.List;
 
 /**
@@ -27,12 +33,16 @@ import java.util.List;
  */
 public class GameController extends BaseController {
     private String name;
+    private Instant startTime;
     private Duration time = Duration.ZERO;
     private IntegerProperty steps = new SimpleIntegerProperty(0);
     private SliderState sliderState;
     private Timeline clock;
     private List<Image> images;
     private int activeTileIndex = -1;
+
+    @Inject
+    GameResultDao gameResultDao;
 
     @FXML
     Label usernameLabel;
@@ -42,6 +52,8 @@ public class GameController extends BaseController {
     Label stepsLabel;
     @FXML
     GridPane gameGrid;
+
+    private BooleanProperty gameOver = new SimpleBooleanProperty();
 
     /**
      * Sets the name to the one specified as the parameter.
@@ -62,7 +74,25 @@ public class GameController extends BaseController {
                 new Image(getClass().getResource("/rectangle/5.png").toExternalForm())
         );
         stepsLabel.textProperty().bind(steps.asString());
+        gameOver.addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                logger.info("Game is over");
+                logger.debug("Saving result to database...");
+                gameResultDao.persist(createGameResult());
+                clock.stop();
+            }
+        });
         resetGame();
+    }
+
+    private GameResult createGameResult() {
+        GameResult result = GameResult.builder()
+                .player(name)
+                .solved(sliderState.isSolved())
+                .duration(java.time.Duration.between(startTime, Instant.now()))
+                .steps(steps.get())
+                .build();
+        return null;
     }
 
     private void resetGame() {
@@ -73,6 +103,7 @@ public class GameController extends BaseController {
         sliderState = new SliderState();
         steps.set(0);
         time = Duration.ZERO;
+        startTime = Instant.now();
         clock = getClockTimeline();
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();

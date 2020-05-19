@@ -1,9 +1,9 @@
 package com.krook1024.game.main;
 
-import com.krook1024.game.controller.GameController;
-import com.krook1024.game.controller.LauncherController;
-import com.krook1024.game.controller.NameFormController;
-import com.krook1024.game.controller.ScoreboardController;
+import com.gluonhq.ignite.guice.GuiceContext;
+import com.google.inject.AbstractModule;
+import com.krook1024.game.results.GameResultDao;
+import com.krook1024.game.util.guice.PersistenceModule;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * The class that controls the application GUI.
@@ -33,6 +34,16 @@ public class App extends Application {
     private static final int appHeight = 480;
 
     private static org.slf4j.Logger logger = LoggerFactory.getLogger(App.class);
+
+    private GuiceContext context = new GuiceContext(this, () -> List.of(
+            new AbstractModule() {
+                @Override
+                protected void configure() {
+                    install(new PersistenceModule("rolling-cubes"));
+                    bind(GameResultDao.class);
+                }
+            }
+    ));
 
     @Override
     public void start(Stage stage) {

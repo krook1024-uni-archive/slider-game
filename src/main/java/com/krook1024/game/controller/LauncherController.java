@@ -54,7 +54,7 @@ public class LauncherController extends BaseController {
      */
     @FXML
     private void onScoreboardButtonClicked(ActionEvent event) {
-        changeSceneTo(getStageOfEvent(event), "/fxml/scoreboard.fxml");
+        changeSceneTo(getStageOfEvent(event), "/fxml/highscores.fxml");
     }
 
     /**
