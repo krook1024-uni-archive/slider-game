@@ -23,8 +23,6 @@ import java.io.IOException;
  */
 @Slf4j
 public class BaseController {
-    protected org.slf4j.Logger logger = LoggerFactory.getLogger(getClass());
-
     @Inject
     FXMLLoader fxmlLoader;
 
@@ -48,15 +46,15 @@ public class BaseController {
      * @param resourceName the path to the new scene
      */
     protected void changeSceneTo(Stage stage, String resourceName) {
-        logger.info("Changing scene to: {}", resourceName);
+        log.info("Changing scene to: {}", resourceName);
         try {
             fxmlLoader.setLocation(getClass().getResource(resourceName));
             Parent root = fxmlLoader.load();
             Scene current = stage.getScene();
             current.setRoot(root);
-            logger.debug("Changed scene to {} on stage {}", root, stage);
+            log.debug("Changed scene to {} on stage {}", root, stage);
         } catch (IOException e) {
-            logger.warn("Something is wrong", e);
+            log.warn("Something is wrong", e);
         }
     }
 }

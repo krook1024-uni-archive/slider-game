@@ -16,6 +16,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 
 import javax.inject.Inject;
@@ -26,6 +27,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.List;
 
+@Slf4j
 public class HighScoreController extends BaseController {
     @Inject
     private FXMLLoader fxmlLoader;
@@ -50,8 +52,8 @@ public class HighScoreController extends BaseController {
 
     @FXML
     private void initialize() {
-        logger.debug("Loading high scores...");
-        logger.trace("gameResultDao: {}", gameResultDao);
+        log.debug("Loading high scores...");
+        log.trace("gameResultDao: {}", gameResultDao);
         List<GameResult> highScoreList = gameResultDao.findBest(10);
 
         player.setCellValueFactory(new PropertyValueFactory<>("player"));

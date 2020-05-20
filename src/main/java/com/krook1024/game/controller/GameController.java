@@ -26,6 +26,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.util.Duration;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.Instant;
 import java.util.List;
@@ -33,6 +34,7 @@ import java.util.List;
 /**
  * Acts as a controller class for the game view.
  */
+@Slf4j
 public class GameController extends BaseController {
     private String name;
     private Instant startTime;
@@ -70,6 +72,7 @@ public class GameController extends BaseController {
 
     @FXML
     private void initialize() {
+        log.info("Starting a new game");
         images = List.of(
                 new Image(getClass().getResource("/rectangle/1.png").toExternalForm()),
                 new Image(getClass().getResource("/rectangle/2.png").toExternalForm()),
@@ -80,10 +83,11 @@ public class GameController extends BaseController {
         stepsLabel.textProperty().bind(steps.asString());
         gameOver.addListener((observable, oldValue, newValue) -> {
             if (newValue) {
-                logger.info("Game is over");
-                gameOver.setValue(false);
-                logger.debug("Saving result to database...");
+                log.info("Game is over");
+                log.debug("Saving result to database...");
                 gameResultDao.persist(createGameResult());
+                gameOver.setValue(false);
+                activeTileIndex = -1;
                 clock.stop();
             }
         });
@@ -99,9 +103,9 @@ public class GameController extends BaseController {
                 .build();
     }
 
-    private void resetGame() {
+    public void resetGame() {
         Platform.runLater(() -> {
-            logger.info("Setting name to {}", name);
+            log.info("Setting name to {}", name);
             usernameLabel.setText("Hello, " + name);
         });
         sliderState = new SliderState();
@@ -172,7 +176,7 @@ public class GameController extends BaseController {
         Integer colSpan = GridPane.getColumnSpan(source);
         Integer rowSpan = GridPane.getRowSpan(source);
 
-        logger.info("Clicked on Tile [{}, {}]", colIndex, rowIndex);
+        log.info("Clicked on Tile [{}, {}]", colIndex, rowIndex);
 
         gameGrid.getChildren()
                 .filtered((Node elem) -> elem != source)
@@ -180,7 +184,7 @@ public class GameController extends BaseController {
         source.setStyle("-fx-opacity: 0.85");
 
         activeTileIndex = sliderState.findTileIndexByTopLeftAtPoint(colIndex, rowIndex);
-        logger.info("The corresponding index for the clicked tile is {}", activeTileIndex);
+        log.info("The corresponding index for the clicked tile is {}", activeTileIndex);
     }
 
     @FXML
@@ -188,7 +192,7 @@ public class GameController extends BaseController {
         Node source = (Node) event.getSource();
         String accessibleText = source.getAccessibleText();
         if ( ! sliderState.isSolved() && ! gameOver.getValue() && activeTileIndex != -1) {
-            logger.debug("Stepping cube {} in the direction {}", activeTileIndex, accessibleText);
+            log.debug("Stepping cube {} in the direction {}", activeTileIndex, accessibleText);
             steps.set(steps.get() + 1);
             switch (accessibleText) {
                 case "UP":
@@ -205,7 +209,7 @@ public class GameController extends BaseController {
             }
             if (sliderState.isSolved()) {
                 gameOver.setValue(true);
-                logger.info("Player {} has solved the game in {} steps", name, steps.get());
+                log.info("Player {} has solved the game in {} steps", name, steps.get());
                 giveUpButton.setText("You won!");
                 giveUpButton.setDisable(true);
                 createGoBackToMainMenuButton();

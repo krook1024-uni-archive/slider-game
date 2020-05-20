@@ -10,12 +10,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
 import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 
 /**
  * Acts as a controller for the launcher view.
  */
+@Slf4j
 public class LauncherController extends BaseController {
 
     @FXML
@@ -39,7 +41,7 @@ public class LauncherController extends BaseController {
                 gameController.setName(name);
                 current.setRoot(root);
             } catch (IOException e) {
-                logger.warn("Something is wrong", e);
+                log.warn("Something is wrong", e);
             }
         } else {
             nameField.setStyle("-fx-background-color: salmon; -fx-border-color: firebrick;");
@@ -64,7 +66,7 @@ public class LauncherController extends BaseController {
      */
     @FXML
     private void onQuitGameButtonClicked(ActionEvent event) {
-        logger.info("Quit button clicked, exiting now...");
+        log.info("Quit button clicked, exiting now...");
         Platform.exit();
     }
 }
