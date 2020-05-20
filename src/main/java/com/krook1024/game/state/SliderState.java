@@ -16,12 +16,33 @@ public class SliderState {
     private List<Tile> tiles;
 
     /**
+     * The initial state of the tiles.
+     */
+    private static final List<Tile> INITIAL = List.of(
+            new Tile(TileType.TYPE1, new Point(0, 0), new Point(1, 0), new Point(0, 1), new Point(0, 1)),
+            new Tile(TileType.TYPE2, new Point(2, 0), new Point(3, 0), new Point(3, 1), new Point(3, 1)),
+            new Tile(TileType.TYPE3, new Point(0, 2), new Point(0, 2), new Point(0, 3), new Point(1, 3)),
+            new Tile(TileType.TYPE4, new Point(3, 2), new Point(3, 2), new Point(2, 3), new Point(3, 3)),
+            new Tile(TileType.TYPE5, new Point(4, 2), new Point(5, 2), new Point(4, 3), new Point(5, 3))
+    );
+
+    /**
+     * A near-win state.
+     */
+    private static final List<Tile> NEAR_WIN = List.of(
+            new Tile(TileType.TYPE1, new Point(0, 0), new Point(1, 0), new Point(0, 1), new Point(0, 1)),
+            new Tile(TileType.TYPE2, new Point(4, 0), new Point(5, 0), new Point(5, 1), new Point(5, 1)),
+            new Tile(TileType.TYPE3, new Point(0, 2), new Point(0, 2), new Point(0, 3), new Point(1, 3)),
+            new Tile(TileType.TYPE4, new Point(3, 2), new Point(3, 2), new Point(2, 3), new Point(3, 3)),
+            new Tile(TileType.TYPE5, new Point(1, 1), new Point(2, 1), new Point(1, 2), new Point(2, 2))
+    );
+
+    /**
      * Initializes the state with the default tiles.
      */
     public SliderState() {
-        initialize();
+        initialize(NEAR_WIN);
     }
-
     /**
      * Initializes the state by setting the tiles to the specified ones.
      * @param tiles the list of the tiles
@@ -30,14 +51,8 @@ public class SliderState {
         this.tiles = tiles;
     }
 
-    private void initialize() {
-        tiles = List.of(
-                new Tile(TileType.TYPE1, new Point(0, 0), new Point(1, 0), new Point(0, 1), new Point(0, 1)),
-                new Tile(TileType.TYPE2, new Point(2, 0), new Point(3, 0), new Point(3, 1), new Point(3, 1)),
-                new Tile(TileType.TYPE3, new Point(0, 2), new Point(0, 2), new Point(0, 3), new Point(1, 3)),
-                new Tile(TileType.TYPE4, new Point(3, 2), new Point(3, 2), new Point(2, 3), new Point(3, 3)),
-                new Tile(TileType.TYPE5, new Point(4, 2), new Point(5, 2), new Point(4, 3), new Point(5, 3))
-        );
+    private void initialize(List<Tile> tiles) {
+        this.tiles = tiles;
     }
 
     /**
@@ -146,7 +161,6 @@ public class SliderState {
                             return;
                         break;
                 }
-
                 break;
         }
 
