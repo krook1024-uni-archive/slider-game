@@ -28,6 +28,12 @@
         </developer>
     </developers>
 
+    <scm>
+        <connection>scm:git:https://github.com/krook1024/slider-game</connection>
+        <developerConnection>scm:git:https://github.com/krook1024/slider-game</developerConnection>
+        <url>https://github.com/krook1024/slider-game</url>
+    </scm>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>
