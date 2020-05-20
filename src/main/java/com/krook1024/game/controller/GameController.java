@@ -38,28 +38,40 @@ import java.util.List;
  */
 @Slf4j
 public class GameController extends BaseController {
-    String playerName;
-    Instant startTime;
-    final IntegerProperty steps = new SimpleIntegerProperty(0);
-    SliderState sliderState;
-    Timeline clock;
-    List<Image> images;
-    int activeTileIndex = -1;
+    private String playerName;
+    private Instant startTime;
+
+    @FXML
+    private IntegerProperty steps = new SimpleIntegerProperty(0);
+
+    private SliderState sliderState;
+
+    private List<Image> images;
+
+    private int activeTileIndex = -1;
 
     @Inject
-    GameResultDao gameResultDao;
+    private GameResultDao gameResultDao;
 
     @FXML
-    Label usernameLabel;
-    @FXML
-    Label elapsedTimeLabel;
-    @FXML
-    Label stepsLabel;
-    @FXML
-    GridPane gameGrid;
-    @FXML
-    Button giveUpButton;
+    private Timeline clock;
 
+    @FXML
+    private Label usernameLabel;
+
+    @FXML
+    private Label elapsedTimeLabel;
+
+    @FXML
+    private Label stepsLabel;
+
+    @FXML
+    private GridPane gameGrid;
+
+    @FXML
+    private Button giveUpButton;
+
+    @FXML
     private BooleanProperty gameOver = new SimpleBooleanProperty();
 
     /**
@@ -113,15 +125,10 @@ public class GameController extends BaseController {
      * Resets the game.
      */
     public synchronized void resetGame() {
-        Platform.runLater(() -> {
-            log.info("Setting name to {}", playerName);
-            usernameLabel.setText("Hello, " + playerName);
-        });
+        sliderState = new SliderState(SliderState.NEAR_WIN);
 
         gameOver.setValue(false);
         steps.set(0);
-
-        sliderState = new SliderState();
 
         startTime = Instant.now();
 
@@ -130,6 +137,8 @@ public class GameController extends BaseController {
         clock.play();
 
         draw();
+
+        Platform.runLater(() -> usernameLabel.setText("Hello, " + playerName));
     }
 
     /**

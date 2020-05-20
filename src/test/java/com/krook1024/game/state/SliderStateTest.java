@@ -12,7 +12,7 @@ class SliderStateTest {
 
     @Test
     void findTileIndexAtPoint() {
-        SliderState state = new SliderState();
+        SliderState state = new SliderState(SliderState.INITIAL);
         int i = state.findTileIndexAtPoint(0, 0);
         assertEquals(0, i);
 
@@ -22,7 +22,7 @@ class SliderStateTest {
 
     @Test
     void findTileIndexByTopLeftAtPoint() {
-        SliderState state = new SliderState();
+        SliderState state = new SliderState(SliderState.INITIAL);
         int i = state.findTileIndexByTopLeftAtPoint(0, 0);
         assertEquals(0, i);
 
@@ -41,7 +41,7 @@ class SliderStateTest {
 
     @Test
     void stepTileWithIndex() {
-        SliderState state = new SliderState();
+        SliderState state = new SliderState(SliderState.INITIAL);
         state.stepTileWithIndex(4, Direction.UP, Axis.Y);
 
         Point topLeft = new Point(4, 1),
@@ -56,21 +56,21 @@ class SliderStateTest {
 
     @Test
     void isEmptySpace() {
-        SliderState state = new SliderState();
+        SliderState state = new SliderState(SliderState.INITIAL);
         assertTrue(state.isEmptySpace(4, 0));
         assertFalse(state.isEmptySpace(new Point(0, 0)));
     }
 
     @Test
     void isEmptySpaceNextToPoint() {
-        SliderState state = new SliderState();
+        SliderState state = new SliderState(SliderState.INITIAL);
         assertFalse(state.isEmptySpaceNextToPoint(4, 0, Direction.LEFT, Axis.X));
         assertTrue(state.isEmptySpaceNextToPoint(4, 0, Direction.RIGHT, Axis.X));
     }
 
     @Test
     void isSolved() {
-        SliderState state = new SliderState();
+        SliderState state = new SliderState(SliderState.INITIAL);
         assertFalse(state.isSolved());
 
         List<Tile> tiles = List.of(

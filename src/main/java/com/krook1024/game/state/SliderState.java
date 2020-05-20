@@ -18,7 +18,7 @@ public class SliderState {
     /**
      * The initial state of the tiles.
      */
-    private static final List<Tile> INITIAL = List.of(
+    public static final List<Tile> INITIAL = List.of(
             new Tile(TileType.TYPE1, new Point(0, 0), new Point(1, 0), new Point(0, 1), new Point(0, 1)),
             new Tile(TileType.TYPE2, new Point(2, 0), new Point(3, 0), new Point(3, 1), new Point(3, 1)),
             new Tile(TileType.TYPE3, new Point(0, 2), new Point(0, 2), new Point(0, 3), new Point(1, 3)),
@@ -29,7 +29,7 @@ public class SliderState {
     /**
      * A near-win state.
      */
-    private static final List<Tile> NEAR_WIN = List.of(
+    public static final List<Tile> NEAR_WIN = List.of(
             new Tile(TileType.TYPE1, new Point(0, 0), new Point(1, 0), new Point(0, 1), new Point(0, 1)),
             new Tile(TileType.TYPE2, new Point(4, 0), new Point(5, 0), new Point(5, 1), new Point(5, 1)),
             new Tile(TileType.TYPE3, new Point(0, 2), new Point(0, 2), new Point(0, 3), new Point(1, 3)),
@@ -37,12 +37,6 @@ public class SliderState {
             new Tile(TileType.TYPE5, new Point(1, 1), new Point(2, 1), new Point(1, 2), new Point(2, 2))
     );
 
-    /**
-     * Initializes the state with the default tiles.
-     */
-    public SliderState() {
-        initialize(NEAR_WIN);
-    }
     /**
      * Initializes the state by setting the tiles to the specified ones.
      * @param tiles the list of the tiles

@@ -11,7 +11,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="slider-game" target="11" />
+      <module name="slider-game" target="13" />
     </bytecodeTargetLevel>
   </component>
 </project>
