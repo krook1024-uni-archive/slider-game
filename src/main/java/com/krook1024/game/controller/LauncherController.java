@@ -34,10 +34,10 @@ public class LauncherController extends BaseController {
                 fxmlLoader.setLocation(getClass().getResource("/fxml/game.fxml"));
                 Parent root = fxmlLoader.load();
                 Stage stage = getStageOfEvent(event);
+                Scene current = stage.getScene();
                 GameController gameController = fxmlLoader.getController();
                 gameController.setName(name);
-                stage.setScene(new Scene(root));
-                stage.show();
+                current.setRoot(root);
             } catch (IOException e) {
                 logger.warn("Something is wrong", e);
             }

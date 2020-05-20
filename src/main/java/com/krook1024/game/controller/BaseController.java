@@ -52,8 +52,8 @@ public class BaseController {
         try {
             fxmlLoader.setLocation(getClass().getResource(resourceName));
             Parent root = fxmlLoader.load();
-            stage.setScene(new Scene(root));
-            stage.show();
+            Scene current = stage.getScene();
+            current.setRoot(root);
             logger.debug("Changed scene to {} on stage {}", root, stage);
         } catch (IOException e) {
             logger.warn("Something is wrong", e);
