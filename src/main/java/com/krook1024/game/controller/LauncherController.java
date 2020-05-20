@@ -1,14 +1,11 @@
 package com.krook1024.game.controller;
 
-import com.krook1024.game.main.App;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Background;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,7 +35,7 @@ public class LauncherController extends BaseController {
                 Stage stage = getStageOfEvent(event);
                 Scene current = stage.getScene();
                 GameController gameController = fxmlLoader.getController();
-                gameController.setName(name);
+                gameController.setPlayerName(name);
                 current.setRoot(root);
             } catch (IOException e) {
                 log.warn("Something is wrong", e);

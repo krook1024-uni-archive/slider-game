@@ -27,8 +27,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.time.DateFormatUtils;
 
 import java.time.Instant;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -36,14 +38,13 @@ import java.util.List;
  */
 @Slf4j
 public class GameController extends BaseController {
-    private String name;
-    private Instant startTime;
-    private Duration time = Duration.ZERO;
-    private IntegerProperty steps = new SimpleIntegerProperty(0);
-    private SliderState sliderState;
-    private Timeline clock;
-    private List<Image> images;
-    private int activeTileIndex = -1;
+    String playerName;
+    Instant startTime;
+    final IntegerProperty steps = new SimpleIntegerProperty(0);
+    SliderState sliderState;
+    Timeline clock;
+    List<Image> images;
+    int activeTileIndex = -1;
 
     @Inject
     GameResultDao gameResultDao;
@@ -64,10 +65,10 @@ public class GameController extends BaseController {
     /**
      * Sets the name to the one specified as the parameter.
      *
-     * @param name the new name
+     * @param playerName the new name
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
     }
 
     @FXML
@@ -80,7 +81,11 @@ public class GameController extends BaseController {
                 new Image(getClass().getResource("/rectangle/4.png").toExternalForm()),
                 new Image(getClass().getResource("/rectangle/5.png").toExternalForm())
         );
+
+        resetGame();
+
         stepsLabel.textProperty().bind(steps.asString());
+
         gameOver.addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 log.info("Game is over");
@@ -91,31 +96,39 @@ public class GameController extends BaseController {
                 clock.stop();
             }
         });
-        resetGame();
+
+        draw();
     }
 
     private GameResult createGameResult() {
         return GameResult.builder()
-                .player(name)
+                .player(playerName)
                 .solved(sliderState.isSolved())
                 .duration(java.time.Duration.between(startTime, Instant.now()))
                 .steps(steps.get())
                 .build();
     }
 
-    public void resetGame() {
+    /**
+     * Resets the game.
+     */
+    public synchronized void resetGame() {
         Platform.runLater(() -> {
-            log.info("Setting name to {}", name);
-            usernameLabel.setText("Hello, " + name);
+            log.info("Setting name to {}", playerName);
+            usernameLabel.setText("Hello, " + playerName);
         });
-        sliderState = new SliderState();
+
+        gameOver.setValue(false);
         steps.set(0);
-        time = Duration.ZERO;
+
+        sliderState = new SliderState();
+
         startTime = Instant.now();
+
         clock = getClockTimeline();
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
-        gameOver.setValue(false);
+
         draw();
     }
 
@@ -127,22 +140,14 @@ public class GameController extends BaseController {
     private Timeline getClockTimeline() {
         return new Timeline(
                 new KeyFrame(Duration.millis(100),
-                        t -> {
-                            Duration duration = ((KeyFrame) t.getSource()).getTime();
-                            time = time.add(duration);
-                            elapsedTimeLabel.setText(formatElapsedTime((int) time.toSeconds()));
-                        })
+                        t -> elapsedTimeLabel.setText(
+                                DateFormatUtils.format(
+                                        java.time.Duration.between(startTime, Instant.now()).toMillis(),
+                                        "HH:mm:ss",
+                                        Calendar.getInstance().getTimeZone()
+                                )
+                        ))
         );
-    }
-
-    /**
-     * Formats seconds as H:MM:SS.
-     *
-     * @param seconds the seconds to format
-     * @return the formatted string
-     */
-    private String formatElapsedTime(int seconds) {
-        return String.format("%d:%02d:%02d", seconds / 3600, (seconds % 3600) / 60, (seconds % 60));
     }
 
     /**
@@ -160,7 +165,7 @@ public class GameController extends BaseController {
             GridPane.setColumnSpan(imageView, 2);
 
             imageView.setImage(images.get(t.getType().getValue() - 1));
-            imageView.setOnMouseClicked(this::handleGameGridClick);
+            imageView.setOnMouseClicked(this::onGameGridClick);
             if (i == activeTileIndex) {
                 imageView.setStyle("-fx-opacity: 0.85");
             }
@@ -168,13 +173,11 @@ public class GameController extends BaseController {
         }
     }
 
-    private void handleGameGridClick(Event e) {
+    private void onGameGridClick(Event e) {
         Node source = (Node) e.getSource();
 
         Integer colIndex = GridPane.getColumnIndex(source);
         Integer rowIndex = GridPane.getRowIndex(source);
-        Integer colSpan = GridPane.getColumnSpan(source);
-        Integer rowSpan = GridPane.getRowSpan(source);
 
         log.info("Clicked on Tile [{}, {}]", colIndex, rowIndex);
 
@@ -191,7 +194,7 @@ public class GameController extends BaseController {
     private void onStepClick(ActionEvent event) {
         Node source = (Node) event.getSource();
         String accessibleText = source.getAccessibleText();
-        if ( ! sliderState.isSolved() && ! gameOver.getValue() && activeTileIndex != -1) {
+        if (!sliderState.isSolved() && !gameOver.get() && activeTileIndex != -1) {
             log.debug("Stepping cube {} in the direction {}", activeTileIndex, accessibleText);
             steps.set(steps.get() + 1);
             switch (accessibleText) {
@@ -209,7 +212,7 @@ public class GameController extends BaseController {
             }
             if (sliderState.isSolved()) {
                 gameOver.setValue(true);
-                log.info("Player {} has solved the game in {} steps", name, steps.get());
+                log.info("Player {} has solved the game in {} steps", playerName, steps.get());
                 giveUpButton.setText("You won!");
                 giveUpButton.setDisable(true);
                 createGoBackToMainMenuButton();
@@ -220,16 +223,16 @@ public class GameController extends BaseController {
 
     @FXML
     private void onGiveUpButtonClicked(ActionEvent event) {
-        if ( ! gameOver.getValue()) {
-            gameOver.setValue(true);
-            clock.stop();
+        log.info("{} has given up!", playerName);
 
-            Button source = (Button) event.getSource();
-            source.setDisable(true);
-            source.setText("You have given up!");
+        gameOver.setValue(true);
+        clock.stop();
 
-            createGoBackToMainMenuButton();
-        }
+        Button source = (Button) event.getSource();
+        source.setDisable(true);
+        source.setText("You have given up!");
+
+        createGoBackToMainMenuButton();
     }
 
     private void createGoBackToMainMenuButton() {
