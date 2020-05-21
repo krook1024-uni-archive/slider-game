@@ -18,7 +18,7 @@ public class SliderState {
     /**
      * The initial state of the tiles.
      */
-    public static final List<Tile> INITIAL = List.of(
+    public static List<Tile> INITIAL = List.of(
             new Tile(TileType.TYPE1, new Point(0, 0), new Point(1, 0), new Point(0, 1), new Point(0, 1)),
             new Tile(TileType.TYPE2, new Point(2, 0), new Point(3, 0), new Point(3, 1), new Point(3, 1)),
             new Tile(TileType.TYPE3, new Point(0, 2), new Point(0, 2), new Point(0, 3), new Point(1, 3)),
@@ -29,7 +29,7 @@ public class SliderState {
     /**
      * A near-win state.
      */
-    public static final List<Tile> NEAR_WIN = List.of(
+    public static List<Tile> NEAR_WIN = List.of(
             new Tile(TileType.TYPE1, new Point(0, 0), new Point(1, 0), new Point(0, 1), new Point(0, 1)),
             new Tile(TileType.TYPE2, new Point(4, 0), new Point(5, 0), new Point(5, 1), new Point(5, 1)),
             new Tile(TileType.TYPE3, new Point(0, 2), new Point(0, 2), new Point(0, 3), new Point(1, 3)),
@@ -42,11 +42,7 @@ public class SliderState {
      * @param tiles the list of the tiles
      */
     public SliderState(List<Tile> tiles) {
-        this.tiles = tiles;
-    }
-
-    private void initialize(List<Tile> tiles) {
-        this.tiles = tiles;
+        this.tiles = new ArrayList<>(tiles);
     }
 
     /**
