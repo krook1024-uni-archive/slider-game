@@ -1,6 +1,7 @@
 package com.krook1024.game.state;
 
 import com.krook1024.game.state.*;
+import javafx.scene.control.Slider;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -82,5 +83,26 @@ class SliderStateTest {
         );
         SliderState solvedState = new SliderState(tiles);
         assertTrue(solvedState.isSolved());
+    }
+
+    @Test
+    void testToString() {
+        SliderState state = new SliderState(SliderState.INITIAL);
+
+        assertEquals(
+            "1 1 2 2     \n" +
+            "1     2     \n" +
+            "3     4 5 5 \n" +
+            "3 3 4 4 5 5 \n",
+            state.toString()
+        );
+
+        state = new SliderState(SliderState.NEAR_WIN);
+        assertEquals(
+                "1 1     2 2 \n" +
+                "1 5 5     2 \n" +
+                "3 5 5 4     \n" +
+                "3 3 4 4     \n",
+                state.toString());
     }
 }
