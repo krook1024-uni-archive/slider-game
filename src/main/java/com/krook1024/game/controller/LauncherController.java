@@ -34,7 +34,7 @@ public class LauncherController extends BaseController {
                 Parent root = fxmlLoader.load();
                 Stage stage = getStageOfEvent(event);
                 Scene current = stage.getScene();
-                GameController gameController = fxmlLoader.getController();
+                GameController gameController = fxmlLoader.<GameController>getController();
                 gameController.setPlayerName(name);
                 current.setRoot(root);
             } catch (IOException e) {

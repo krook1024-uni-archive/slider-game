@@ -11,7 +11,7 @@
                 <children>
                     <Label fx:id="usernameLabel" text="Hello, User" />
                     <Pane maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-                    <Label fx:id="elapsedTimeLabel" text="00:00:00" />
+                    <Label fx:id="stopWatchLabel" text="00:00:00" />
                <Label layoutX="558.0" layoutY="46.0" text="Steps:">
                   <HBox.margin>
                      <Insets left="20.0" />

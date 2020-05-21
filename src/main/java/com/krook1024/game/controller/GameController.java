@@ -28,8 +28,10 @@ import javafx.scene.layout.HBox;
 import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.lang3.time.DurationFormatUtils;
 
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.List;
 
@@ -39,6 +41,7 @@ import java.util.List;
 @Slf4j
 public class GameController extends BaseController {
     private String playerName;
+
     private Instant startTime;
 
     @FXML
@@ -54,13 +57,13 @@ public class GameController extends BaseController {
     private GameResultDao gameResultDao;
 
     @FXML
-    private Timeline clock;
+    private Timeline stopWatchTimeline;
+
+    @FXML
+    private Label stopWatchLabel;
 
     @FXML
     private Label usernameLabel;
-
-    @FXML
-    private Label elapsedTimeLabel;
 
     @FXML
     private Label stepsLabel;
@@ -94,8 +97,6 @@ public class GameController extends BaseController {
                 new Image(getClass().getResource("/rectangle/5.png").toExternalForm())
         );
 
-        resetGame();
-
         stepsLabel.textProperty().bind(steps.asString());
 
         gameOver.addListener((observable, oldValue, newValue) -> {
@@ -103,13 +104,12 @@ public class GameController extends BaseController {
                 log.info("Game is over");
                 log.debug("Saving result to database...");
                 gameResultDao.persist(createGameResult());
-                gameOver.setValue(false);
                 activeTileIndex = -1;
-                clock.stop();
+                stopWatchTimeline.stop();
             }
         });
 
-        draw();
+        resetGame();
     }
 
     private GameResult createGameResult() {
@@ -126,19 +126,24 @@ public class GameController extends BaseController {
      */
     public synchronized void resetGame() {
         sliderState = new SliderState(SliderState.NEAR_WIN);
-
-        gameOver.setValue(false);
         steps.set(0);
-
+        gameOver.setValue(false);
         startTime = Instant.now();
-
-        clock = getClockTimeline();
-        clock.setCycleCount(Animation.INDEFINITE);
-        clock.play();
-
         draw();
-
+        createStopWatch();
         Platform.runLater(() -> usernameLabel.setText("Hello, " + playerName));
+    }
+
+    /**
+     * Creates and runs the stopwatch timeline.
+     */
+    private void createStopWatch() {
+        stopWatchTimeline = new Timeline(new KeyFrame(Duration.ZERO, e -> {
+            long millisElapsed = startTime.until(Instant.now(), ChronoUnit.MILLIS);
+            stopWatchLabel.setText(DurationFormatUtils.formatDuration(millisElapsed, "HH:mm:ss"));
+        }), new KeyFrame(Duration.seconds(1)));
+        stopWatchTimeline.setCycleCount(Animation.INDEFINITE);
+        stopWatchTimeline.play();
     }
 
     /**
@@ -149,7 +154,7 @@ public class GameController extends BaseController {
     private Timeline getClockTimeline() {
         return new Timeline(
                 new KeyFrame(Duration.millis(100),
-                        t -> elapsedTimeLabel.setText(
+                        t -> stopWatchLabel.setText(
                                 DateFormatUtils.format(
                                         java.time.Duration.between(startTime, Instant.now()).toMillis(),
                                         "HH:mm:ss",
@@ -204,7 +209,7 @@ public class GameController extends BaseController {
         Node source = (Node) event.getSource();
         String accessibleText = source.getAccessibleText();
         if (!sliderState.isSolved() && !gameOver.get() && activeTileIndex != -1) {
-            log.debug("Stepping cube {} in the direction {}", activeTileIndex, accessibleText);
+            log.debug("Stepping tile {} in the direction {}", activeTileIndex, accessibleText);
             steps.set(steps.get() + 1);
             switch (accessibleText) {
                 case "UP":
@@ -235,7 +240,6 @@ public class GameController extends BaseController {
         log.info("{} has given up!", playerName);
 
         gameOver.setValue(true);
-        clock.stop();
 
         Button source = (Button) event.getSource();
         source.setDisable(true);
