@@ -90,19 +90,19 @@ class SliderStateTest {
         SliderState state = new SliderState(SliderState.INITIAL);
 
         assertEquals(
-            "1 1 2 2     \n" +
-            "1     2     \n" +
-            "3     4 5 5 \n" +
-            "3 3 4 4 5 5 \n",
-            state.toString()
+                "1 1 2 2     \n" +
+                        "1     2     \n" +
+                        "3     4 5 5 \n" +
+                        "3 3 4 4 5 5 \n",
+                state.toString()
         );
 
         state = new SliderState(SliderState.NEAR_WIN);
         assertEquals(
                 "1 1     2 2 \n" +
-                "1 5 5     2 \n" +
-                "3 5 5 4     \n" +
-                "3 3 4 4     \n",
+                        "1 5 5     2 \n" +
+                        "3 5 5 4     \n" +
+                        "3 3 4 4     \n",
                 state.toString());
     }
 }
