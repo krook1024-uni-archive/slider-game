@@ -124,7 +124,7 @@ public class GameController extends BaseController {
     /**
      * Resets the game.
      */
-    public synchronized void resetGame() {
+    public void resetGame() {
         sliderState = new SliderState(SliderState.NEAR_WIN);
         steps.set(0);
         gameOver.setValue(false);
@@ -144,24 +144,6 @@ public class GameController extends BaseController {
         }), new KeyFrame(Duration.seconds(1)));
         stopWatchTimeline.setCycleCount(Animation.INDEFINITE);
         stopWatchTimeline.play();
-    }
-
-    /**
-     * Creates a timeline that runs the clock (counts elapsed time).
-     *
-     * @return the timeline for the clock
-     */
-    private Timeline getClockTimeline() {
-        return new Timeline(
-                new KeyFrame(Duration.millis(100),
-                        t -> stopWatchLabel.setText(
-                                DateFormatUtils.format(
-                                        java.time.Duration.between(startTime, Instant.now()).toMillis(),
-                                        "HH:mm:ss",
-                                        Calendar.getInstance().getTimeZone()
-                                )
-                        ))
-        );
     }
 
     /**
