@@ -1,8 +1,7 @@
 package com.krook1024.game.state;
 
-import com.krook1024.game.state.*;
-import javafx.scene.control.Slider;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -10,10 +9,15 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SliderStateTest {
+    SliderState state;
+
+    @BeforeEach
+    void setUp() {
+        state = new SliderState(SliderState.INITIAL);
+    }
 
     @Test
     void findTileIndexAtPoint() {
-        SliderState state = new SliderState(SliderState.INITIAL);
         int i = state.findTileIndexAtPoint(0, 0);
         assertEquals(0, i);
 
@@ -23,7 +27,6 @@ class SliderStateTest {
 
     @Test
     void findTileIndexByTopLeftAtPoint() {
-        SliderState state = new SliderState(SliderState.INITIAL);
         int i = state.findTileIndexByTopLeftAtPoint(0, 0);
         assertEquals(0, i);
 
@@ -42,7 +45,6 @@ class SliderStateTest {
 
     @Test
     void stepTileWithIndex() {
-        SliderState state = new SliderState(SliderState.INITIAL);
         state.stepTileWithIndex(4, Direction.UP, Axis.Y);
 
         Point topLeft = new Point(4, 1),
@@ -57,21 +59,18 @@ class SliderStateTest {
 
     @Test
     void isEmptySpace() {
-        SliderState state = new SliderState(SliderState.INITIAL);
         assertTrue(state.isEmptySpace(4, 0));
         assertFalse(state.isEmptySpace(new Point(0, 0)));
     }
 
     @Test
     void isEmptySpaceNextToPoint() {
-        SliderState state = new SliderState(SliderState.INITIAL);
         assertFalse(state.isEmptySpaceNextToPoint(4, 0, Direction.LEFT, Axis.X));
         assertTrue(state.isEmptySpaceNextToPoint(4, 0, Direction.RIGHT, Axis.X));
     }
 
     @Test
     void isSolved() {
-        SliderState state = new SliderState(SliderState.INITIAL);
         assertFalse(state.isSolved());
 
         List<Tile> tiles = List.of(
@@ -87,8 +86,6 @@ class SliderStateTest {
 
     @Test
     void testToString() {
-        SliderState state = new SliderState(SliderState.INITIAL);
-
         assertEquals(
                 "1 1 2 2     \n" +
                         "1     2     \n" +

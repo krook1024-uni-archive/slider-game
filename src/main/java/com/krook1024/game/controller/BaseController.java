@@ -1,6 +1,5 @@
 package com.krook1024.game.controller;
 
-import com.krook1024.game.main.App;
 import com.krook1024.game.results.GameResultDao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;

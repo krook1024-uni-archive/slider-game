@@ -1,5 +1,6 @@
 package com.krook1024.game.state;
 
+import javafx.scene.control.Slider;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
@@ -13,7 +14,13 @@ import java.util.stream.Collectors;
 @Data
 public class SliderState {
     @Setter(AccessLevel.NONE)
-    private List<Tile> tiles = new ArrayList<>();
+    private List<Tile> tiles = List.of(
+            new Tile(TileType.TYPE1, new Point(0, 0), new Point(1, 0), new Point(0, 1), new Point(0, 1)),
+            new Tile(TileType.TYPE2, new Point(4, 0), new Point(5, 0), new Point(5, 1), new Point(5, 1)),
+            new Tile(TileType.TYPE3, new Point(0, 2), new Point(0, 2), new Point(0, 3), new Point(1, 3)),
+            new Tile(TileType.TYPE4, new Point(3, 2), new Point(3, 2), new Point(2, 3), new Point(3, 3)),
+            new Tile(TileType.TYPE5, new Point(1, 1), new Point(2, 1), new Point(1, 2), new Point(2, 2))
+    );
 
     /**
      * The initial state of the tiles.
@@ -37,16 +44,11 @@ public class SliderState {
             new Tile(TileType.TYPE5, new Point(1, 1), new Point(2, 1), new Point(1, 2), new Point(2, 2))
     );
 
-    /**
-     * Initializes the state by setting the tiles to the specified ones.
-     * @param tiles the list of the tiles
-     */
-    public SliderState(List<Tile> tiles) {
-        this.tiles = new ArrayList<Tile>();
-        this.tiles.addAll(tiles);
+    public SliderState() {
+
     }
 
-    private void initialize(List<Tile> tiles) {
+    public SliderState(List<Tile> tiles) {
         this.tiles = tiles;
     }
 
@@ -265,10 +267,10 @@ public class SliderState {
     }
 
     public static void main(String[] args) {
-        SliderState state = new SliderState(SliderState.INITIAL);
+        SliderState state = new SliderState();
         System.out.println(state);
 
-        state = new SliderState(SliderState.NEAR_WIN);
+        state = new SliderState();
         System.out.println(state);
     }
 }

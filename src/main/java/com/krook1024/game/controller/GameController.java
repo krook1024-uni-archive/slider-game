@@ -89,6 +89,7 @@ public class GameController extends BaseController {
     @FXML
     private void initialize() {
         log.info("Starting a new game");
+
         images = List.of(
                 new Image(getClass().getResource("/rectangle/1.png").toExternalForm()),
                 new Image(getClass().getResource("/rectangle/2.png").toExternalForm()),
@@ -109,7 +110,7 @@ public class GameController extends BaseController {
             }
         });
 
-        resetGame();
+        Platform.runLater(this::resetGame);
     }
 
     private GameResult createGameResult() {
@@ -125,7 +126,7 @@ public class GameController extends BaseController {
      * Resets the game.
      */
     public void resetGame() {
-        sliderState = new SliderState(SliderState.NEAR_WIN);
+        sliderState = new SliderState();
         steps.set(0);
         gameOver.setValue(false);
         startTime = Instant.now();
