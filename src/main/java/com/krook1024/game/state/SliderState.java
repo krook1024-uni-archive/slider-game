@@ -130,35 +130,18 @@ public class SliderState {
         }
         Tile t = tiles.get(index);
 
-        switch (axis) {
-            case X:
-                switch (direction) {
-                    case LEFT:
-                        if (! isEmptySpaceNextToPoint(t.getTopLeft(), direction, axis) ||
-                                ! isEmptySpaceNextToPoint(t.getBotLeft(), direction, axis))
-                            return;
-                        break;
-                    case RIGHT:
-                        if (! isEmptySpaceNextToPoint(t.getTopRight(), direction, axis) ||
-                                ! isEmptySpaceNextToPoint(t.getBotRight(), direction, axis))
-                            return;
-                        break;
-                }
-                break;
-            case Y:
-                switch (direction) {
-                    case UP:
-                        if (! isEmptySpaceNextToPoint(t.getTopLeft(), direction, axis) ||
-                                ! isEmptySpaceNextToPoint(t.getTopRight(), direction, axis))
-                            return;
-                        break;
-                    case DOWN:
-                        if (! isEmptySpaceNextToPoint(t.getBotLeft(), direction, axis) ||
-                                ! isEmptySpaceNextToPoint(t.getBotRight(), direction, axis))
-                            return;
-                        break;
-                }
-                break;
+        if (axis == Axis.X) {
+            if (!(isEmptySpace(t.getTopLeft().getX() + direction.getValue(), t.getTopLeft().getY(), index) &&
+                    isEmptySpace(t.getTopRight().getX() + direction.getValue(), t.getTopRight().getY(), index) &&
+                    isEmptySpace(t.getBotLeft().getX() + direction.getValue(), t.getBotLeft().getY(), index) &&
+                    isEmptySpace(t.getBotRight().getX() + direction.getValue(), t.getBotRight().getY(), index)))
+                return;
+        } else if (axis == Axis.Y) {
+            if (!(isEmptySpace(t.getTopLeft().getX(), t.getTopLeft().getY() + direction.getValue(), index) &&
+                    isEmptySpace(t.getTopRight().getX(), t.getTopRight().getY() + direction.getValue(), index) &&
+                    isEmptySpace(t.getBotLeft().getX(), t.getBotLeft().getY() + direction.getValue(), index) &&
+                    isEmptySpace(t.getBotRight().getX(), t.getBotRight().getY() + direction.getValue(), index)))
+                return;
         }
 
         t.step(direction, axis);
@@ -171,7 +154,7 @@ public class SliderState {
      * @return whether the point is empty
      */
     public boolean isEmptySpace(Point p) {
-        return isEmptySpace(p.getX(), p.getY());
+        return isEmptySpace(p.getX(), p.getY(), -1);
     }
 
     /**
@@ -182,7 +165,22 @@ public class SliderState {
      * @return whether the point is empty
      */
     public boolean isEmptySpace(int x, int y) {
-        List<Tile> tilesAtPoint = tiles.stream().filter(tile -> findTileIndexAtPoint(x, y) != -1).collect(Collectors.toList());
+        return isEmptySpace(x, y, -1);
+    }
+
+    /**
+     * Tells whether a point is empty.
+     *
+     * @param x the x co-ordinate of the point
+     * @param y the y co-ordinate of the point
+     * @param exclude the tile id to be excluded from the search
+     * @return whether the point is empty
+     */
+    public boolean isEmptySpace(int x, int y, int exclude) {
+        List<Tile> tilesAtPoint = tiles
+                .stream()
+                .filter(tile -> findTileIndexAtPoint(x, y) != -1 && findTileIndexAtPoint(x, y) != exclude)
+                .collect(Collectors.toList());
         return tilesAtPoint.size() == 0;
     }
 
