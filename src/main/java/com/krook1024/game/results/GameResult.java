@@ -9,6 +9,9 @@ import javax.persistence.*;
 import java.time.Duration;
 import java.time.ZonedDateTime;
 
+/**
+ * This class represents a game result.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

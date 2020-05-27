@@ -13,6 +13,9 @@ import java.util.stream.Collectors;
  */
 @Data
 public class SliderState {
+    /**
+     * The tiles in the current game.
+     */
     @Setter(AccessLevel.NONE)
     private List<Tile> tiles = List.of(
             new Tile(TileType.TYPE1, new Point(0, 0), new Point(1, 0), new Point(0, 1), new Point(0, 1)),
@@ -44,10 +47,15 @@ public class SliderState {
             new Tile(TileType.TYPE5, new Point(1, 1), new Point(2, 1), new Point(1, 2), new Point(2, 2))
     );
 
-    public SliderState() {
+    /**
+     * The constructor that accepts no arguments.
+     */
+    public SliderState() { }
 
-    }
-
+    /**
+     * The constructor that will initialize the current list of tiles with the given list of tiles.
+     * @param tiles the list of {@link Tile}s
+     */
     public SliderState(List<Tile> tiles) {
         this.tiles = tiles;
     }
@@ -264,6 +272,10 @@ public class SliderState {
         return sb.toString();
     }
 
+    /**
+     * A main class in SliderState that only servers testing purposes.
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
         SliderState state = new SliderState();
         System.out.println(state);

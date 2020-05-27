@@ -9,6 +9,9 @@ import java.util.List;
  * DAO class for the {@link GameResult} entity.
  */
 public class GameResultDao extends GenericJpaDao<GameResult> {
+    /**
+     * The constructor that accepts no arguments.
+     */
     public GameResultDao() {
         super(GameResult.class);
     }

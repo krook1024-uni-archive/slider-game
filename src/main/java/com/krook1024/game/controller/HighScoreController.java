@@ -27,6 +27,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.List;
 
+/**
+ * This class acts as the controller for the highscore view.
+ */
 @Slf4j
 public class HighScoreController extends BaseController {
     @Inject
