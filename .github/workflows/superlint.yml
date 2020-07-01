@@ -1,2 +1,14 @@
-- name: Super-Linter
-  uses: github/super-linter@v3.1.1
+
+name: GitHub superlint
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest    
+    steps:
+      - name: Super-Linter
+        uses: github/super-linter@v3.1.1
